@@ -1,11 +1,18 @@
+import 'package:bloc/bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/pages/screens/home_screen.dart';
+import 'package:my_social_app/components/bloc_observe.dart';
+import 'package:my_social_app/components/theme.dart';
 
-void main() {
-  runApp(const MySocialApp());
+import 'view/screens/loginScreen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+  await Firebase.initializeApp();
+  runApp( MySocialApp());
 }
-
-class MySocialApp extends StatelessWidget {
+class MySocialApp extends StatelessWidget{
   const MySocialApp({super.key});
 
   // This widget is the root of your application.
@@ -13,12 +20,8 @@ class MySocialApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomeScreen(),
+      theme: themeMode,
+      home: LoginScreen(),
     );
   }
 }
-
-

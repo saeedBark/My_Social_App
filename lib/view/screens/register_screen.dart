@@ -1,13 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_shop_app/Screens/register/cubit/cubit.dart';
-import 'package:my_shop_app/Screens/register/cubit/state.dart';
-import 'package:my_shop_app/componets/componets.dart';
-import 'package:my_shop_app/layout/layout.dart';
-import 'package:my_shop_app/network/shared_preference/shared_preference.dart';
-import 'package:my_shop_app/style/color.dart';
-import 'package:my_shop_app/widget/navigator.dart';
+import 'package:my_social_app/cubit/register/cubit.dart';
+import 'package:my_social_app/cubit/register/state.dart';
+import 'package:my_social_app/pages/wedget/default_text.dart';
+import 'package:my_social_app/view/wedget/default_bottom.dart';
+import 'package:my_social_app/view/wedget/default_text_form_file.dart';
+
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -19,29 +18,30 @@ class RegisterScreen extends StatelessWidget {
     var namedController = TextEditingController();
     var phoneController = TextEditingController();
     return BlocProvider(
-      create: (context) => ShopRegisterCubit(),
-      child: BlocConsumer<ShopRegisterCubit, ShopRegisterState>(
+      create: (context) => RegisterCubit(),
+      child: BlocConsumer<RegisterCubit, RegisterState>(
         listener: (context, state) {
-          if (state is ShopRegisterSuccessState) {
-            if (state.mod.status!) {
-              SharedPreferenceCach.saveData(
-                      key: 'token', value: state.mod.data!.token)
-                  .then((value) {
-                token = state.mod.data!.token;
-
-                toastShow(text: state.mod.message!, color: Colors.amber);
-                navigatorAndReplace(context, const LayoutScreen());
-              }).catchError((error) {
-                print(error.toString());
-              });
-            } else {
-              // print(state.mod.message!);
-              toastShow(text: state.mod.message!, color: Colors.red);
-            }
-          }
-        },
+          // if (state is RegisterSuccessState) {
+          //   if (state.mod.status!) {
+          //     SharedPreferenceCach.saveData(
+          //             key: 'token', value: state.mod.data!.token)
+          //         .then((value) {
+          //       token = state.mod.data!.token;
+          //
+          //       toastShow(text: state.mod.message!, color: Colors.amber);
+          //       navigatorAndReplace(context, const LayoutScreen());
+          //     }).catchError((error) {
+          //       print(error.toString());
+          //     });
+          //   } else {
+          //     // print(state.mod.message!);
+          //     toastShow(text: state.mod.message!, color: Colors.red);
+          //   }
+          // }
+          //
+          },
         builder: (context, state) {
-          var cubit = ShopRegisterCubit.get(context);
+          var cubit = RegisterCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
             body: Center(
@@ -53,16 +53,15 @@ class RegisterScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        defaultText(
+                        DefaultText(
                             text: 'REGISTER',
                             fontSize: 24,
-                            fontWeidght: FontWeight.bold,
+                            fontWiedght: FontWeight.bold,
                             color: const Color(0xFFD319C2)),
                         const SizedBox(
                           height: 30,
                         ),
-
-                        defaultFormFile(
+                        DefaultFromFile(
                           controller: namedController,
                           type: TextInputType.name,
                           validator: (value) {
@@ -77,7 +76,7 @@ class RegisterScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        defaultFormFile(
+                        DefaultFromFile(
                           controller: emailController,
                           type: TextInputType.emailAddress,
                           validator: (value) {
@@ -92,7 +91,7 @@ class RegisterScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        defaultFormFile(
+                        DefaultFromFile(
                           controller: passwordController,
                           isPassword: cubit.isPassword,
                           validator: (value) {
@@ -102,7 +101,7 @@ class RegisterScreen extends StatelessWidget {
                             return null;
                           },
                           suffix: cubit.suffix,
-                          onTap: () {
+                          onsumit: (v) {
                             cubit.changPasswordShow();
                           },
                           lable: 'Password',
@@ -111,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        defaultFormFile(
+                        DefaultFromFile(
                           controller: phoneController,
                           type: TextInputType.phone,
                           validator: (value) {
@@ -128,18 +127,19 @@ class RegisterScreen extends StatelessWidget {
                         ),
                         ConditionalBuilder(
                           condition: true,
-                          // state is! ShopLoginLoadingState,
-                          builder: (context) => defaultButton(
-                            fanction: () {
+                          // state is! LoginLoadingState,
+                          builder: (context) => DefaultBottom(
+                            function: () {
                               if (formkey.currentState!.validate()) {
-                                cubit.userLogin(
+                                cubit.userRegister(
                                     email: emailController.text,
                                     password: passwordController.text,
                                     name: namedController.text,
                                     phone: phoneController.text);
-                                  print('saeed');
-                                 //navigatorAndReplace(context, LayoutScreen());
+                              //  print('saeed');
+                                //navigatorAndReplace(context, LayoutScreen());
                               }
+
                             },
                             text: 'Register',
                             isUpperCase: true,

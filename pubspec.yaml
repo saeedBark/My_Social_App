@@ -39,6 +39,8 @@ dependencies:
   flutter_bloc: ^8.1.2
   bloc: ^8.1.1
   conditional_builder_null_safety: ^0.0.5
+  firebase_auth: ^4.4.0
+  cloud_firestore: ^4.5.0
 
 dev_dependencies:
   flutter_test:
