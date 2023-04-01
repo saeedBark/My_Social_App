@@ -5,7 +5,7 @@ class DefaultText extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
   final double? fontSize;
-   DefaultText({
+   DefaultText({super.key,
      required this.text,
       this. color,
    this. fontWeight,

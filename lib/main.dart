@@ -10,7 +10,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
-  runApp( MySocialApp());
+  runApp( const MySocialApp());
 }
 class MySocialApp extends StatelessWidget{
   const MySocialApp({super.key});

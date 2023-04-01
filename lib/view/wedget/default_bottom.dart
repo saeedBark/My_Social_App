@@ -7,7 +7,7 @@ class DefaultBottom extends StatelessWidget {
   bool isUpperCase;
   Function function;
   String text;
-   DefaultBottom({
+   DefaultBottom({super.key,
     this. color = const Color(0xFFD319C2),
     this. width = double.infinity,
     this. raduis = 15,
