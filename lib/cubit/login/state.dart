@@ -9,7 +9,11 @@ class LoginChangePasswordShowState extends LoginState {}
 /////////// userDataPost/////
 class LoginLoadingState extends LoginState {}
 
-class LoginSuccessState extends LoginState {}
+class LoginSuccessState extends LoginState {
+  final String model;
+
+  LoginSuccessState(this.model);
+}
 
 class LoginErrorState extends LoginState {
   final String error;

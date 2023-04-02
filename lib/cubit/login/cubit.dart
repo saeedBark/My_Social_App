@@ -23,15 +23,19 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) {
+    print('hi');
     emit(LoginLoadingState());
+    print('///////////');
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
+      print('///////fgdsfgd////');
       print(value.user!.email);
-      emit(LoginSuccessState());
+      emit(LoginSuccessState(value.user!.uid));
     }).catchError((error) {
       print(error.toString());
-      emit(LoginErrorState(error));
+      print('///55r4e4544544444444444');
+      emit(LoginErrorState(error.toString()));
     });
   }
 

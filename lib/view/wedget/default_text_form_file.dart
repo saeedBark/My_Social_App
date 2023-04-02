@@ -6,11 +6,11 @@ class DefaultFromFile extends StatelessWidget {
   Function? onsumit;
   String lable;
   IconData prefix;
-  Function()? onTap;
   TextInputType? type;
   Function validator;
   IconData? suffix;
   bool enable;
+  Function()? onTap;
   bool isPassword;
   DefaultFromFile({
     required this.controller,
@@ -30,14 +30,15 @@ class DefaultFromFile extends StatelessWidget {
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
+      onTap: () {
+        onTap!();
+      },
       keyboardType: type,
       onFieldSubmitted: (d) {
         onsumit!(d);
       },
       validator: (value) => validator(value),
-      onTap: () {
-        onTap!();
-      },
+
       enabled: enable,
       decoration: InputDecoration(
         labelText: lable,

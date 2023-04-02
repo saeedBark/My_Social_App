@@ -4,8 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/register/cubit.dart';
 import 'package:my_social_app/cubit/register/state.dart';
 import 'package:my_social_app/pages/wedget/default_text.dart';
+import 'package:my_social_app/view/screens/layout_screen.dart';
 import 'package:my_social_app/view/wedget/default_bottom.dart';
 import 'package:my_social_app/view/wedget/default_text_form_file.dart';
+import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
+import 'package:my_social_app/view/wedget/package/show_toast.dart';
 
 
 class RegisterScreen extends StatelessWidget {
@@ -21,7 +24,11 @@ class RegisterScreen extends StatelessWidget {
       create: (context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterState>(
         listener: (context, state) {
-          // if (state is RegisterSuccessState) {
+           if (state is RegisterErrorState) {
+                   showToast(color: Colors.red, text: state.error);
+           }else {
+             navigatorAndReplace(context, LayoutScreen());
+           }
           //   if (state.mod.status!) {
           //     SharedPreferenceCach.saveData(
           //             key: 'token', value: state.mod.data!.token)
@@ -37,7 +44,7 @@ class RegisterScreen extends StatelessWidget {
           //     // print(state.mod.message!);
           //     toastShow(text: state.mod.message!, color: Colors.red);
           //   }
-          // }
+
           //
           },
         builder: (context, state) {

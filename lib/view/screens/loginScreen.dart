@@ -5,12 +5,14 @@ import 'package:my_social_app/components/colors.dart';
 import 'package:my_social_app/cubit/login/cubit.dart';
 import 'package:my_social_app/cubit/login/state.dart';
 import 'package:my_social_app/pages/wedget/default_text.dart';
-import 'package:my_social_app/view/screens/home_screen.dart';
+import 'package:my_social_app/view/screens/layout_screen.dart';
 import 'package:my_social_app/view/screens/register_screen.dart';
 import 'package:my_social_app/view/wedget/default_bottom.dart';
 import 'package:my_social_app/view/wedget/default_text_form_file.dart';
 import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
+import 'package:my_social_app/view/wedget/package/show_toast.dart';
 
+import '../../share_preference/shared_preference.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -24,10 +26,18 @@ class LoginScreen extends StatelessWidget {
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
-
-          if(state is LoginSuccessState){
-            navigatorAndReplace(context, HomeScreen());
+          if (state is LoginErrorState) {
+            showToast(color: Colors.red, text: state.error);
+          } else if (state is LoginSuccessState) {
+            SharedPreferenceCach.saveData(key: 'uId', value: state.model)
+                .then((value) {
+              showToast(color: Colors.green, text: 'Success');
+              navigatorAndReplace(context, LayoutScreen());
+            }).catchError((errer) {
+              print(errer.toString());
+            });
           }
+
           // if (state is LoginSuccessState) {
           //   if (state.mod.status!) {
           //     SharedPreferenceCach.saveData(
@@ -101,8 +111,7 @@ class LoginScreen extends StatelessWidget {
                           return null;
                         },
                         suffix: cubit.suffix,
-
-                       onTap : () {
+                        onsumit: () {
                           cubit.changPasswordShow();
                         },
                         lable: 'Password',
@@ -120,9 +129,8 @@ class LoginScreen extends StatelessWidget {
                                   email: emailController.text,
                                   password: passwordController.text);
                               //  print('saeed');
-                             //  navigatorAndReplace(context, HomeScreen());
+                              //  navigatorAndReplace(context, HomeScreen());
                             }
-
                           },
                           text: 'LOgin',
                           isUpperCase: true,
