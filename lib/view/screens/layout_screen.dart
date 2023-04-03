@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_social_app/cubit/layout/cubit.dart';
+import 'package:my_social_app/cubit/layout/state.dart';
 import 'package:my_social_app/view/screens/loginScreen.dart';
 import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
 
@@ -10,16 +13,23 @@ class LayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Container(
-          child: TextButton(child:Text ('saeed'),onPressed: (){
-            SharedPreferenceCach.logout(key: 'uId').then((value) {
-              navigatorAndReplace(context,LoginScreen());
-            });
-          },),
-        ),
-      ),
+    return BlocConsumer<LayoutCubit, LayoutState>(
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        return Scaffold(
+          body: Center(
+            child: Container(
+              child: TextButton(child: Text('saeed'), onPressed: () {
+                SharedPreferenceCach.logout(key: 'uId').then((value) {
+                  navigatorAndReplace(context, LoginScreen());
+                });
+              },),
+            ),
+          ),
+        );
+      },
     );
   }
 }

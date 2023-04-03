@@ -1,7 +1,6 @@
 class UserModel {
    String? name;
    String? email;
-   String? password;
    String? phone;
    String? uid;
 
@@ -10,14 +9,12 @@ class UserModel {
     this.name,
     this.email,
     this.phone,
-    this.password,
       this.uid,
 });
   UserModel.formjson(Map<String ,dynamic> json){
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
-    password = json['password'];
     uid = json['uid'];
   }
 
