@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/register/cubit.dart';
 import 'package:my_social_app/cubit/register/state.dart';
 import 'package:my_social_app/pages/wedget/default_text.dart';
-import 'package:my_social_app/view/screens/layout_screen.dart';
+import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 import 'package:my_social_app/view/wedget/default_bottom.dart';
 import 'package:my_social_app/view/wedget/default_text_form_file.dart';
 import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';

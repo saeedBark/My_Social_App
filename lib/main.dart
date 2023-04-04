@@ -7,10 +7,10 @@ import 'package:my_social_app/components/theme.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/share_preference/shared_preference.dart';
 
-import 'package:my_social_app/view/screens/layout_screen.dart';
+import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 
 import 'components/component.dart';
-import 'view/screens/loginScreen.dart';
+import 'view/screens/login/loginScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

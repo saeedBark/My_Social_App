@@ -16,7 +16,7 @@ import 'package:flutter/services.dart';
     scaffoldBackgroundColor: Colors.white,
     primarySwatch: Colors.pink,
     textTheme: const TextTheme(
-      titleLarge: TextStyle(color: Colors.black, fontSize: 20),
+      titleLarge: TextStyle(color: Colors.black, fontSize: 15,height: 1.3),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,

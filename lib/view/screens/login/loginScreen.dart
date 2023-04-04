@@ -5,14 +5,14 @@ import 'package:my_social_app/components/colors.dart';
 import 'package:my_social_app/cubit/login/cubit.dart';
 import 'package:my_social_app/cubit/login/state.dart';
 import 'package:my_social_app/pages/wedget/default_text.dart';
-import 'package:my_social_app/view/screens/layout_screen.dart';
-import 'package:my_social_app/view/screens/register_screen.dart';
+import 'package:my_social_app/view/screens/layout/layout_screen.dart';
+import 'package:my_social_app/view/screens/register/register_screen.dart';
 import 'package:my_social_app/view/wedget/default_bottom.dart';
 import 'package:my_social_app/view/wedget/default_text_form_file.dart';
 import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
 import 'package:my_social_app/view/wedget/package/show_toast.dart';
 
-import '../../share_preference/shared_preference.dart';
+import '../../../share_preference/shared_preference.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
