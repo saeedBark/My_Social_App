@@ -59,6 +59,9 @@ class RegisterCubit extends Cubit<RegisterState> {
       email: email,
       phone: phone,
       uid: uid,
+      bio: 'wirte bio...',
+      image: 'https://images.unsplash.com/photo-1680523127490-978b85b8bf71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0MXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+      cover: 'https://images.unsplash.com/photo-1661956601031-4cf09efadfce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw1MHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'
     );
 
     FirebaseFirestore.instance
@@ -72,26 +75,5 @@ class RegisterCubit extends Cubit<RegisterState> {
     });
   }
 
-// late UserLoginModel model;
-// void userLogin({
-//   required email,
-//   required password,
-//   required phone,
-//   required name,
-// }) {
-//   emit(RegisterLoadingState());
-//   DioHelper.postData(url: 'register', data: {
-//     'email': email,
-//     'password': password,
-//     'name': name,
-//     'phone': phone
-//   }).then((value) {
-//     model = UserLoginModel.fromJson(value.data);
 
-//     emit(RegisterSuccessState(model));
-//   }).catchError((error) {
-//     print(error.toString());
-//     emit(RegisterErrorState(error.toString()));
-//   });
-// }
 }

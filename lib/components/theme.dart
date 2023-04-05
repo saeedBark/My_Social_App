@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
           color: Colors.black,
         )),
     scaffoldBackgroundColor: Colors.white,
-    primarySwatch: Colors.pink,
+    primarySwatch: Colors.blue,
     textTheme: const TextTheme(
       titleLarge: TextStyle(color: Colors.black, fontSize: 15,height: 1.3),
     ),

@@ -41,7 +41,7 @@ int currendIndex = 0;
     emit(LayoutChangeBottomState());
   }
 
-  List<Widget> screens = const [
+  List<Widget> screens =  [
      FeedScreen(),
     ChatScreen(),
     UsersScreen(),
