@@ -11,8 +11,8 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   static RegisterCubit get(context) => BlocProvider.of(context);
 
-  IconData suffix = Icons.visibility_outlined;
-  bool isPassword = true;
+  var suffix = Icons.visibility_outlined;
+ var  isPassword = false;
 
   void changPasswordShow() {
     isPassword = !isPassword;

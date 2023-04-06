@@ -1,3 +1,3 @@
 
 
-String uId = '';
+dynamic uId = '';

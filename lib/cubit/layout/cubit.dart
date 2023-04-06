@@ -1,8 +1,13 @@
+
+
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
 import '../../components/component.dart';
 import '../../models/user_model.dart';
@@ -60,4 +65,19 @@ int currendIndex = 0;
     BottomNavigationBarItem(icon: Icon(Icons.person),label: 'User'),
     BottomNavigationBarItem(icon: Icon(Icons.settings_outlined),label: 'Setting'),
   ];
+
+
+  File? profileimage;
+  var picker = ImagePicker();
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        profileimage = File(pickedFile.path);
+        emit(LayoutPickeProfileImageSuccessState());
+      } else {
+        emit(LayoutPickeProfileImageErrorState());
+      }
+
+  }
 }

@@ -99,6 +99,9 @@ class RegisterScreen extends StatelessWidget {
                           height: 10,
                         ),
                         DefaultFromFile(
+                          onTap: (){
+                            cubit.changPasswordShow();
+                          },
                           controller: passwordController,
                           isPassword: cubit.isPassword,
                           validator: (value) {
@@ -108,9 +111,6 @@ class RegisterScreen extends StatelessWidget {
                             return null;
                           },
                           suffix: cubit.suffix,
-                          onsumit: (v) {
-                            cubit.changPasswordShow();
-                          },
                           lable: 'Password',
                           prefix: Icons.password,
                         ),

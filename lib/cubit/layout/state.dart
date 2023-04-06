@@ -12,3 +12,9 @@ class LayoutGetAllUserErrorState extends LayoutState {}
 ////// change bottom ////////
 
 class LayoutChangeBottomState extends LayoutState {}
+
+/////////////////
+
+class LayoutPickeProfileImageSuccessState extends LayoutState {}
+
+class LayoutPickeProfileImageErrorState extends LayoutState {}
