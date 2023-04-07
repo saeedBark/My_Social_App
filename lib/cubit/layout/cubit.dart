@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -13,9 +11,9 @@ import '../../components/component.dart';
 import '../../models/user_model.dart';
 import '../../view/screens/layout/chat.dart';
 import '../../view/screens/layout/feed.dart';
-import '../../view/screens/layout/setting.dart';
+import '../../view/screens/layout/setting/setting.dart';
 import '../../view/screens/layout/users.dart';
-
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class LayoutCubit extends Cubit<LayoutState> {
   LayoutCubit() : super(LayoutInitialState());
@@ -38,46 +36,141 @@ class LayoutCubit extends Cubit<LayoutState> {
     });
   }
 
-int currendIndex = 0;
+  int currendIndex = 0;
 
-  void changeBottom( int index){
-
+  void changeBottom(int index) {
     currendIndex = index;
     emit(LayoutChangeBottomState());
   }
 
-  List<Widget> screens =  [
-     FeedScreen(),
+  List<Widget> screens = [
+    FeedScreen(),
     ChatScreen(),
     UsersScreen(),
     SettingScreen(),
   ];
   List<String> title = [
-
     'Home',
     'Chat',
     'Users',
     'Setting',
   ];
   List<BottomNavigationBarItem> bottomNavigaton = const [
-    BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: 'Feed'),
-    BottomNavigationBarItem(icon: Icon(Icons.chat_outlined),label: 'Chat'),
-    BottomNavigationBarItem(icon: Icon(Icons.person),label: 'User'),
-    BottomNavigationBarItem(icon: Icon(Icons.settings_outlined),label: 'Setting'),
+    BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Feed'),
+    BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: 'Chat'),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'User'),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.settings_outlined), label: 'Setting'),
   ];
 
-
-  File? profileimage;
+  File? imageProfile;
   var picker = ImagePicker();
-  Future getImage() async {
+  Future<void> getImageProfile() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-      if (pickedFile != null) {
-        profileimage = File(pickedFile.path);
-        emit(LayoutPickeProfileImageSuccessState());
-      } else {
-        emit(LayoutPickeProfileImageErrorState());
-      }
+    if (pickedFile != null) {
+      imageProfile = File(pickedFile.path);
+      emit(LayoutPickeImageProfileSuccessState());
+    } else {
+      emit(LayoutPickeImageProfileErrorState());
+    }
+  }
 
+  File? coverProfile;
+  Future<void> getCoverFrofile() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      coverProfile = File(pickedFile.path);
+      emit(LayoutPickeCoverProfileSuccessState());
+    } else {
+      emit(LayoutPickeCoverProfileErrorState());
+    }
+  }
+
+  String? uploadImageProfil = '';
+  void uploadImageProfile({
+    required name,
+    required bio,
+    required phone,
+  }) {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(imageProfile!.path).pathSegments.last}')
+        .putFile(imageProfile!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        uploadImageProfil = value;
+        print(value);
+        updateDataUser(
+          name: name,
+          bio: bio,
+          phone: phone,
+        );
+        //   emit(LayoutUploadImageProfileSuccessState());
+      }).catchError((error) {
+        emit(LayoutUploadImageProfileErrorState());
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUploadImageProfileErrorState());
+    });
+  }
+
+  String? uploadCoverProfil = '';
+  void uploadCoverProfile({
+    required name,
+    required bio,
+    required phone,
+  }) {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(coverProfile!.path).pathSegments.last}')
+        .putFile(coverProfile!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+       // uploadCoverProfil = value;
+        print(value);
+        updateDataUser(
+          name: name,
+          bio: bio,
+          phone: phone,
+          cover: value,
+        );
+        // emit(LayoutUploadCoverProfileSuccessState());
+      }).catchError((error) {
+        emit(LayoutUploadCoverProfileErrorState());
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUploadCoverProfileErrorState());
+    });
+  }
+
+  void updateDataUser({
+    required name,
+    required bio,
+    required phone,
+    String? cover,
+  }) {
+    UserModel model = UserModel(
+      name: name,
+      bio: bio,
+      phone: phone,
+      uid: userModel!.uid,
+      cover: userModel!.cover,
+      image: userModel!.image,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel!.uid)
+        .update(model.toMap())
+        .then((value) {
+
+      getAllUser();
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUpdateDataUserErrorState());
+    });
   }
 }

@@ -3,14 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
-
-import '../wedget/default_text_form_file.dart';
+import '../../../wedget/default_text_form_file.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  EditProfileScreen({Key? key}) : super(key: key);
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final phoneController = TextEditingController();
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +15,19 @@ class EditProfileScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        var cubit =LayoutCubit.get(context);
+        final nameController = TextEditingController();
+        final phoneController = TextEditingController();
+        final bioController = TextEditingController();
+
+        var cubit = LayoutCubit.get(context);
         var userModel = LayoutCubit.get(context).userModel;
-        var imageProfile = LayoutCubit.get(context).profileimage;
+        var imageProfile = LayoutCubit.get(context).imageProfile;
+        var coverProfile = LayoutCubit.get(context).coverProfile;
 
         nameController.text = userModel!.name!;
-        emailController.text = userModel.email!;
-       phoneController.text = userModel.phone!;
+        bioController.text = userModel.bio!;
+        phoneController.text = userModel.phone!;
+
         var model = LayoutCubit.get(context).userModel;
         return Scaffold(
           appBar: AppBar(
@@ -36,7 +38,14 @@ class EditProfileScreen extends StatelessWidget {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  cubit.uploadImageProfile(
+                    name: nameController.text,
+                    bio: bioController.text,
+                    phone: phoneController.text,
+                  );
+                  //cubit.uploadCoverProfile();
+                },
                 child: Text(
                   'Update',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
@@ -68,9 +77,12 @@ class EditProfileScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7),
                                     image: DecorationImage(
-                                        image: NetworkImage(
-                                          model!.cover!,
-                                        ),
+                                        image: coverProfile == null
+                                            ? NetworkImage(
+                                                model!.cover!,
+                                              )
+                                            : FileImage(coverProfile)
+                                                as ImageProvider,
                                         fit: BoxFit.cover)),
                               ),
                               Padding(
@@ -83,7 +95,9 @@ class EditProfileScreen extends StatelessWidget {
                                       color: Colors.blue,
                                     ),
                                     child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        cubit.getCoverFrofile();
+                                      },
                                       icon: const Icon(
                                         Icons.camera_alt_outlined,
                                         size: 25,
@@ -102,13 +116,16 @@ class EditProfileScreen extends StatelessWidget {
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 50,
-                                backgroundImage: NetworkImage(
-                                  model.image!,
-                                ),
+                                backgroundImage: imageProfile == null
+                                    ? NetworkImage(
+                                        model!.image!,
+                                      )
+                                    : FileImage(imageProfile) as ImageProvider,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 8.0, top: 8),
+                              padding:
+                                  const EdgeInsets.only(right: 8.0, top: 8),
                               child: Container(
                                 height: 40,
                                 decoration: const BoxDecoration(
@@ -117,7 +134,7 @@ class EditProfileScreen extends StatelessWidget {
                                 ),
                                 child: IconButton(
                                   onPressed: () {
-                                    cubit.getImage();
+                                    cubit.getImageProfile();
                                   },
                                   icon: const Icon(
                                     Icons.camera_alt_outlined,
@@ -140,15 +157,19 @@ class EditProfileScreen extends StatelessWidget {
                     lable: 'name',
                     prefix: Icons.person_outline,
                   ),
-                  const SizedBox(height: 10,),
-                  DefaultFromFile(
-                    controller:emailController,
-                    lable: 'email',
-                    prefix: Icons.email,
+                  const SizedBox(
+                    height: 10,
                   ),
-                  const SizedBox(height: 10,),
                   DefaultFromFile(
-                    controller:phoneController,
+                    controller: bioController,
+                    lable: 'bio',
+                    prefix: Icons.info_outline,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  DefaultFromFile(
+                    controller: phoneController,
                     lable: 'phone',
                     prefix: Icons.phone,
                   ),

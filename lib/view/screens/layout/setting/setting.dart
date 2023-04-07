@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
 import 'package:my_social_app/models/user_model.dart';
-import 'package:my_social_app/view/screens/edite_profile_screen.dart';
+import 'package:my_social_app/view/screens/layout/setting/edite_profile_screen.dart';
 import 'package:my_social_app/view/wedget/default_text.dart';
 
-import '../../wedget/navigatorPage/navigator_page.dart';
+import '../../../wedget/navigatorPage/navigator_page.dart';
 
 class SettingScreen extends StatelessWidget {
    SettingScreen({Key? key}) : super(key: key);
