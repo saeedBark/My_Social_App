@@ -4,22 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/components/colors.dart';
 import 'package:my_social_app/cubit/login/cubit.dart';
 import 'package:my_social_app/cubit/login/state.dart';
-import 'package:my_social_app/pages/wedget/default_text.dart';
 import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 import 'package:my_social_app/view/screens/register/register_screen.dart';
-import 'package:my_social_app/view/wedget/default_bottom.dart';
-import 'package:my_social_app/view/wedget/default_text_form_file.dart';
-import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
-import 'package:my_social_app/view/wedget/package/show_toast.dart';
 
 import '../../../share_preference/shared_preference.dart';
+import '../../widget/default_bottom.dart';
+import '../../widget/default_text.dart';
+import '../../widget/default_text_form_file.dart';
+import '../../widget/navigatorPage/navigator_page.dart';
+import '../../widget/package/show_toast.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  var formkey = GlobalKey<FormState>();
+ const LoginScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
+    var formkey = GlobalKey<FormState>();
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
     return BlocProvider(
@@ -32,7 +33,7 @@ class LoginScreen extends StatelessWidget {
             SharedPreferenceCach.saveData(key: 'uId', value: state.model)
                 .then((value) {
               showToast(color: Colors.green, text: 'Success');
-              navigatorAndReplace(context, LayoutScreen());
+              navigatorAndReplace(context, const LayoutScreen());
             }).catchError((errer) {
               print(errer.toString());
             });
@@ -70,18 +71,18 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      DefaultText(
+                      const DefaultText(
                           text: 'LOGIN',
                           fontSize: 24,
-                          fontWiedght: FontWeight.bold,
-                          color: const Color(0xFFD319C2)),
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFFD319C2)),
                       const SizedBox(
                         height: 10,
                       ),
-                      DefaultText(
+                      const DefaultText(
                           text: 'Please entre your email and password ',
                           fontSize: 20,
-                          fontWiedght: FontWeight.bold,
+                          fontWeight: FontWeight.bold,
                           color: Colors.grey),
                       const SizedBox(
                         height: 30,
@@ -141,14 +142,14 @@ class LoginScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          DefaultText(
+                          const DefaultText(
                             text: "Don't have alerdy email?",
                           ),
                           TextButton(
                               onPressed: () {
-                                navigatorAndReplace(context, RegisterScreen());
+                                navigatorAndReplace(context, const RegisterScreen());
                               },
-                              child: DefaultText(
+                              child: const DefaultText(
                                   text: 'Register', color: defaultColor)),
                         ],
                       ),

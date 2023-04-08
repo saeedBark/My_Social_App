@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
-import 'package:my_social_app/models/user_model.dart';
 import 'package:my_social_app/view/screens/layout/setting/edite_profile_screen.dart';
-import 'package:my_social_app/view/wedget/default_text.dart';
-
-import '../../../wedget/navigatorPage/navigator_page.dart';
+import '../../../widget/default_text.dart';
+import '../../../widget/navigatorPage/navigator_page.dart';
 
 class SettingScreen extends StatelessWidget {
    SettingScreen({Key? key}) : super(key: key);
@@ -102,10 +100,10 @@ class SettingScreen extends StatelessWidget {
           Row(
             children: [
               Expanded(child: OutlinedButton(onPressed: (){}, child: Text('Add photo '))),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5,),
               OutlinedButton(onPressed: (){
-                navigatorTo(context,EditProfileScreen());
-              }, child: Icon(Icons.edit)),
+                navigatorTo(context,const EditProfileScreen());
+              }, child: const Icon(Icons.edit)),
             ],
           ),
 

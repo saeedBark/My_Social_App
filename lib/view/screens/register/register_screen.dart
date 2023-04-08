@@ -3,23 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/register/cubit.dart';
 import 'package:my_social_app/cubit/register/state.dart';
-import 'package:my_social_app/pages/wedget/default_text.dart';
 import 'package:my_social_app/view/screens/layout/layout_screen.dart';
-import 'package:my_social_app/view/wedget/default_bottom.dart';
-import 'package:my_social_app/view/wedget/default_text_form_file.dart';
-import 'package:my_social_app/view/wedget/navigatorPage/navigator_page.dart';
-import 'package:my_social_app/view/wedget/package/show_toast.dart';
+
+import '../../widget/default_bottom.dart';
+import '../../widget/default_text.dart';
+import '../../widget/default_text_form_file.dart';
+import '../../widget/navigatorPage/navigator_page.dart';
+import '../../widget/package/show_toast.dart';
 
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
-  var formkey = GlobalKey<FormState>();
+  const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
     var namedController = TextEditingController();
     var phoneController = TextEditingController();
+    var formkey = GlobalKey<FormState>();
     return BlocProvider(
       create: (context) => RegisterCubit(),
       child: BlocConsumer<RegisterCubit, RegisterState>(
@@ -27,25 +29,8 @@ class RegisterScreen extends StatelessWidget {
            if (state is RegisterErrorState) {
                    showToast(color: Colors.red, text: state.error);
            }else {
-             navigatorAndReplace(context, LayoutScreen());
+             navigatorAndReplace(context, const LayoutScreen());
            }
-          //   if (state.mod.status!) {
-          //     SharedPreferenceCach.saveData(
-          //             key: 'token', value: state.mod.data!.token)
-          //         .then((value) {
-          //       token = state.mod.data!.token;
-          //
-          //       toastShow(text: state.mod.message!, color: Colors.amber);
-          //       navigatorAndReplace(context, const LayoutScreen());
-          //     }).catchError((error) {
-          //       print(error.toString());
-          //     });
-          //   } else {
-          //     // print(state.mod.message!);
-          //     toastShow(text: state.mod.message!, color: Colors.red);
-          //   }
-
-          //
           },
         builder: (context, state) {
           var cubit = RegisterCubit.get(context);
@@ -60,11 +45,11 @@ class RegisterScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        DefaultText(
+                        const DefaultText(
                             text: 'REGISTER',
                             fontSize: 24,
-                            fontWiedght: FontWeight.bold,
-                            color: const Color(0xFFD319C2)),
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFD319C2)),
                         const SizedBox(
                           height: 30,
                         ),

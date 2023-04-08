@@ -15,7 +15,7 @@ class UserModel {
       this.bio,
       this.image,
       this.cover});
-  UserModel.formjson(Map<String, dynamic> json) {
+  UserModel.formJson(Map<String, dynamic> json) {
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
@@ -34,10 +34,6 @@ class UserModel {
       'bio': bio,
       'image': image,
       'cover': cover,
-      // 'image' : image,
-      // 'cover' : cover,
-      // 'bio' : bio,
-      // 'isEmailVerified' : isEmailVerified,
     };
   }
 }

@@ -39,22 +39,4 @@ class LoginCubit extends Cubit<LoginState> {
     });
   }
 
-  // late UserLoginModel model;
-  // void userLogin({
-  //   required email,
-  //   required password,
-  // }) {
-  //   emit(LoginLoadingState());
-  //   DioHelper.postData(url: 'login', data: {
-  //     'email': email,
-  //     'password': password,
-  //   }).then((value) {
-  //     model = UserLoginModel.fromJson(value.data);
-
-  //     emit(LoginSuccessState(model));
-  //   }).catchError((error) {
-  //     print(error.toString());
-  //     emit(LoginErrorState(error.toString()));
-  //   });
-  // }
 }

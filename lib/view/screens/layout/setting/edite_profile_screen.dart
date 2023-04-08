@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
-import '../../../wedget/default_text_form_file.dart';
+
+import '../../../widget/default_text_form_file.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({Key? key}) : super(key: key);
@@ -31,10 +31,10 @@ class EditProfileScreen extends StatelessWidget {
         var model = LayoutCubit.get(context).userModel;
         return Scaffold(
           appBar: AppBar(
-            title: Text('Edit Profile'),
+            title: const Text('Edit Profile'),
             leading: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
             ),
             actions: [
               TextButton(
