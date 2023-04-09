@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'card_widget.dart';
+
 class FeedWidget extends StatelessWidget {
   const FeedWidget({Key? key}) : super(key: key);
 
@@ -13,15 +15,8 @@ class FeedWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Card(
-              elevation: 10,
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: Image.network(
-                'https://plus.unsplash.com/premium_photo-1668383203267-877d4b1feb47?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
-                fit: BoxFit.cover,
-                height: 180,
-                width: double.infinity,
-              ),
+            CardWidget(
+              image: 'https://images.unsplash.com/photo-1680925708354-81e3e81170fd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60 ',
             ),
             const SizedBox(
               height: 10,

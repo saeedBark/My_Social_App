@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
 import 'package:my_social_app/view/screens/layout/setting/edite_profile_screen.dart';
+import 'package:my_social_app/view/widget/setting/cover_and_image_widget.dart';
 import '../../../widget/default_text.dart';
 import '../../../widget/navigatorPage/navigator_page.dart';
 
@@ -22,42 +23,11 @@ class SettingScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
         children: [
-          Container(
-            height: 200,
-            child: Stack(
-              alignment: AlignmentDirectional.bottomCenter,
-              children: [
-                Align(
-                  alignment: AlignmentDirectional.topCenter,
-                  child: Container(
-                    height: 160,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        image:  DecorationImage(
-                            image: NetworkImage(
-                              userModel!.cover!,
-                            ),
-                            fit: BoxFit.cover)),
-                  ),
-                ),
-                 CircleAvatar(
-                  radius: 55,
-                  backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                      userModel!.image!,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          CoverAndImageWidget(image: userModel!.image!, cover: userModel.cover!),
           const SizedBox(height: 10,),
-          DefaultText(text: userModel!.name!,style: Theme.of(context).textTheme.titleLarge,),
+          DefaultText(text: userModel.name!,style: Theme.of(context).textTheme.titleLarge,),
           const SizedBox(height: 10,),
-          DefaultText(text: userModel!.bio!,style: Theme.of(context).textTheme.titleLarge,),
+          DefaultText(text: userModel.bio!,style: Theme.of(context).textTheme.titleLarge,),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30.0),
             child: Row(
@@ -99,7 +69,7 @@ class SettingScreen extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(child: OutlinedButton(onPressed: (){}, child: Text('Add photo '))),
+              Expanded(child: OutlinedButton(onPressed: (){}, child: const Text('Add photo '))),
               const SizedBox(width: 5,),
               OutlinedButton(onPressed: (){
                 navigatorTo(context,const EditProfileScreen());
