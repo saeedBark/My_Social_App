@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DefaultFromFile extends StatelessWidget {
@@ -12,7 +11,7 @@ class DefaultFromFile extends StatelessWidget {
   bool enable;
   Function()? onTap;
   bool isPassword;
-  DefaultFromFile({
+  DefaultFromFile({super.key,
     required this.controller,
     this.onsumit,
     required this.lable,

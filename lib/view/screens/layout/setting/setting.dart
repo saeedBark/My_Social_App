@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
@@ -9,7 +8,7 @@ import '../../../widget/default_text.dart';
 import '../../../widget/navigatorPage/navigator_page.dart';
 
 class SettingScreen extends StatelessWidget {
-   SettingScreen({Key? key}) : super(key: key);
+   const SettingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +20,9 @@ void main() async {
   uId = SharedPreferenceCach.getData(key: 'uId');
 
   if (uId != null) {
-    widget = LayoutScreen();
+    widget = const LayoutScreen();
   } else {
-    widget = LoginScreen();
+    widget = const LoginScreen();
   }
 
   runApp(MySocialApp(
@@ -34,7 +33,7 @@ void main() async {
 class MySocialApp extends StatelessWidget {
   final Widget starWidget;
 
-  MySocialApp({super.key, required this.starWidget});
+  const MySocialApp({super.key, required this.starWidget});
 
   // This widget is the root of your application.
   @override

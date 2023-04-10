@@ -39,24 +39,7 @@ class LoginScreen extends StatelessWidget {
             });
           }
 
-          // if (state is LoginSuccessState) {
-          //   if (state.mod.status!) {
-          //     SharedPreferenceCach.saveData(
-          //             key: 'token', value: state.mod.data!.token)
-          //         .then((value) {
-          //       token = state.mod.data!.token;
 
-          //       toastShow(text: state.mod.message!, color: Colors.green);
-          //       navigatorAndReplace(context, const LayoutScreen());
-          //     }).catchError((error) {
-          //       print(error.toString());
-          //     });
-          //   } else {
-          //     // print(state.mod.message!);
-          //     toastShow(text: state.mod.message!, color: Colors.red);
-          //   }
-
-          // }
         },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
@@ -143,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const DefaultText(
-                            text: "Don't have alerdy email?",
+                            text: "Don't have already email?",
                           ),
                           TextButton(
                               onPressed: () {

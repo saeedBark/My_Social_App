@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'card_widget.dart';
@@ -56,7 +55,7 @@ class FeedWidget extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              Text('janur 2023-5-141 5:25:00',
+                              Text('september 2023-5-141 5:25:00',
                                   style: Theme.of(context)
                                       .textTheme
                                       .caption!
@@ -86,7 +85,7 @@ class FeedWidget extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0, right: 10),
-                          child: Container(
+                          child: SizedBox(
                             height: 20,
                             //   margin: EdgeInsets.symmetric(horizontal: 5),
                             child: MaterialButton(
@@ -113,7 +112,7 @@ class FeedWidget extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(7),
-                          image: DecorationImage(
+                          image: const DecorationImage(
                               image: NetworkImage(
                                 'https://images.unsplash.com/photo-1680399524789-6af50a3738f9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw5NHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
                               ),
@@ -161,13 +160,13 @@ class FeedWidget extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        CircleAvatar(
+                        const CircleAvatar(
                           radius: 25,
                           backgroundImage: NetworkImage(
                             'https://images.unsplash.com/photo-1679679008383-6f778fe07828?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw5M3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
                           ),
                         ),
-                        SizedBox(width: 20,),
+                        const SizedBox(width: 20,),
                         Expanded(child: Text('write a comment....',style: Theme.of(context).textTheme.caption!.copyWith(color: Colors.grey),)),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -184,7 +183,7 @@ class FeedWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 50,
                     ),
                   ],
