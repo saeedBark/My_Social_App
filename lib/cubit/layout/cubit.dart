@@ -86,7 +86,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     }
   }
 
-  String? uploadImageProfil = '';
+ // String? uploadImageProfil = '';
   void uploadImageProfile({
     required name,
     required bio,
@@ -98,14 +98,15 @@ class LayoutCubit extends Cubit<LayoutState> {
         .putFile(imageProfile!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        uploadImageProfil = value;
-        print(value);
+       // uploadImageProfil = value;
         updateDataUser(
           name: name,
           bio: bio,
           phone: phone,
+          image: value,
         );
-        //   emit(LayoutUploadImageProfileSuccessState());
+        print(value);
+     //   emit(LayoutUploadImageProfileSuccessState());
       }).catchError((error) {
         emit(LayoutUploadImageProfileErrorState());
       });
@@ -115,27 +116,28 @@ class LayoutCubit extends Cubit<LayoutState> {
     });
   }
 
-  String? uploadCoverProfil = '';
+  //String? uploadCoverProfil = '';
   void uploadCoverProfile({
     required name,
     required bio,
     required phone,
   }) {
+      emit(LayoutGetAllUserLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(coverProfile!.path).pathSegments.last}')
         .putFile(coverProfile!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-       // uploadCoverProfil = value;
-        print(value);
+        //  uploadCoverProfil = value;
         updateDataUser(
           name: name,
           bio: bio,
           phone: phone,
           cover: value,
         );
-        // emit(LayoutUploadCoverProfileSuccessState());
+        print(value);
+    //    emit(LayoutUploadCoverProfileSuccessState());
       }).catchError((error) {
         emit(LayoutUploadCoverProfileErrorState());
       });
@@ -150,25 +152,27 @@ class LayoutCubit extends Cubit<LayoutState> {
     required bio,
     required phone,
     String? cover,
+    String? image,
   }) {
-    UserModel model = UserModel(
-      name: name,
-      bio: bio,
-      phone: phone,
-      uid: userModel!.uid,
-      cover: userModel!.cover,
-      image: userModel!.image,
-    );
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userModel!.uid)
-        .update(model.toMap())
-        .then((value) {
 
-      getAllUser();
-    }).catchError((error) {
-      print(error.toString());
-      emit(LayoutUpdateDataUserErrorState());
-    });
-  }
+      UserModel model = UserModel(
+        name: name,
+        bio: bio,
+        phone: phone,
+        uid: userModel!.uid,
+        cover: cover ?? userModel!.cover,
+        image: image ?? userModel!.image,
+      );
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userModel!.uid)
+          .update(model.toMap())
+          .then((value) {
+        getAllUser();
+      }).catchError((error) {
+        print(error.toString());
+        emit(LayoutUpdateDataUserErrorState());
+      });
+    }
+
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
+import 'package:my_social_app/view/widget/default_bottom.dart';
 
 import '../../../widget/default_text_form_file.dart';
 
@@ -33,13 +34,15 @@ class EditProfileScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Edit Profile'),
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: const Icon(Icons.arrow_back_ios),
             ),
             actions: [
               TextButton(
                 onPressed: () {
-                  cubit.uploadImageProfile(
+                  cubit.updateDataUser(
                     name: nameController.text,
                     bio: bioController.text,
                     phone: phoneController.text,
@@ -151,6 +154,66 @@ class EditProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(
                     height: 40,
+                  ),
+                  Row(
+                    children: [
+                      if (cubit.imageProfile != null)
+                        Expanded(
+                            child: Column(
+                          children: [
+                            DefaultBottom(
+                              function: () {
+                                cubit.uploadImageProfile(
+                                  name: nameController.text,
+                                  bio: bioController.text,
+                                  phone: phoneController.text,
+                                );
+                              },
+                              text: 'Upload Image',
+                            ),
+                            if(state is LayoutGetAllUserLoadingState)
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            if(state is LayoutGetAllUserLoadingState)
+                            const LinearProgressIndicator(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        )),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      if (cubit.coverProfile != null)
+                        Expanded(
+                            child: Column(
+                          children: [
+                            DefaultBottom(
+                              function: () {
+                                cubit.uploadCoverProfile(
+                                  name: nameController.text,
+                                  bio: bioController.text,
+                                  phone: phoneController.text,
+                                );
+                              },
+                              text: 'Upload cover',
+                            ),
+                            if(state is LayoutGetAllUserLoadingState)
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            if(state is LayoutGetAllUserLoadingState)
+                            const LinearProgressIndicator(),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   DefaultFromFile(
                     controller: nameController,
