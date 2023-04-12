@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
+import 'package:my_social_app/view/screens/layout/new_post_screen.dart';
+import 'package:my_social_app/view/widget/navigatorPage/navigator_page.dart';
 import '../../components/component.dart';
+import '../../models/post_model.dart';
 import '../../models/user_model.dart';
 import '../../view/screens/layout/chat.dart';
 import '../../view/screens/layout/feed.dart';
@@ -36,26 +39,33 @@ class LayoutCubit extends Cubit<LayoutState> {
 
   int currendIndex = 0;
 
-  void changeBottom(int index) {
-    currendIndex = index;
-    emit(LayoutChangeBottomState());
+  void changeBottom(int index, context) {
+    if (index == 2) {
+      navigatorTo(context, NewPostScreen());
+    } else {
+      currendIndex = index;
+      emit(LayoutChangeBottomState());
+    }
   }
 
   List<Widget> screens = [
     FeedScreen(),
     ChatScreen(),
+    NewPostScreen(),
     UsersScreen(),
     SettingScreen(),
   ];
   List<String> title = [
     'Home',
     'Chat',
+    'Post',
     'Users',
     'Setting',
   ];
   List<BottomNavigationBarItem> bottomNavigaton = const [
     BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Feed'),
     BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: 'Chat'),
+    BottomNavigationBarItem(icon: Icon(Icons.post_add_outlined), label: 'Post'),
     BottomNavigationBarItem(icon: Icon(Icons.person), label: 'User'),
     BottomNavigationBarItem(
         icon: Icon(Icons.settings_outlined), label: 'Setting'),
@@ -86,7 +96,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     }
   }
 
- // String? uploadImageProfil = '';
+  // String? uploadImageProfil = '';
   void uploadImageProfile({
     required name,
     required bio,
@@ -98,7 +108,7 @@ class LayoutCubit extends Cubit<LayoutState> {
         .putFile(imageProfile!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-       // uploadImageProfil = value;
+        // uploadImageProfil = value;
         updateDataUser(
           name: name,
           bio: bio,
@@ -106,7 +116,7 @@ class LayoutCubit extends Cubit<LayoutState> {
           image: value,
         );
         print(value);
-     //   emit(LayoutUploadImageProfileSuccessState());
+        //   emit(LayoutUploadImageProfileSuccessState());
       }).catchError((error) {
         emit(LayoutUploadImageProfileErrorState());
       });
@@ -122,7 +132,7 @@ class LayoutCubit extends Cubit<LayoutState> {
     required bio,
     required phone,
   }) {
-      emit(LayoutGetAllUserLoadingState());
+    emit(LayoutGetAllUserLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('users/${Uri.file(coverProfile!.path).pathSegments.last}')
@@ -137,7 +147,7 @@ class LayoutCubit extends Cubit<LayoutState> {
           cover: value,
         );
         print(value);
-    //    emit(LayoutUploadCoverProfileSuccessState());
+        //    emit(LayoutUploadCoverProfileSuccessState());
       }).catchError((error) {
         emit(LayoutUploadCoverProfileErrorState());
       });
@@ -154,25 +164,94 @@ class LayoutCubit extends Cubit<LayoutState> {
     String? cover,
     String? image,
   }) {
+    UserModel model = UserModel(
+      name: name,
+      bio: bio,
+      phone: phone,
+      uid: userModel!.uid,
+      cover: cover ?? userModel!.cover,
+      image: image ?? userModel!.image,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel!.uid)
+        .update(model.toMap())
+        .then((value) {
+      getAllUser();
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUpdateDataUserErrorState());
+    });
+  }
 
-      UserModel model = UserModel(
-        name: name,
-        bio: bio,
-        phone: phone,
-        uid: userModel!.uid,
-        cover: cover ?? userModel!.cover,
-        image: image ?? userModel!.image,
-      );
-      FirebaseFirestore.instance
-          .collection('users')
-          .doc(userModel!.uid)
-          .update(model.toMap())
-          .then((value) {
-        getAllUser();
-      }).catchError((error) {
-        print(error.toString());
-        emit(LayoutUpdateDataUserErrorState());
-      });
+  File? imagePostPicke;
+  Future<void> getImagePost() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      imagePostPicke = File(pickedFile.path);
+      emit(LayoutPickeImagePostSuccessState());
+    } else {
+      emit(LayoutPickeImagePostErrorState());
     }
+  }
 
+  // String? uploadImageProfil = '';
+  void uploadImagePost({
+    required String textPost,
+     String? imagePost,
+    required String datePost,
+  }) {
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('posts/${Uri.file(imagePostPicke!.path).pathSegments.last}')
+        .putFile(imagePostPicke!)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        // uploadImageProfil = value;
+        uploadCreatePost(
+          textPost: textPost,
+          datePost: datePost,
+          imagePost: value,
+        );
+        print(value);
+        //   emit(LayoutUploadImageProfileSuccessState());
+      }).catchError((error) {
+        emit(LayoutUploadImageProfileErrorState());
+      });
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUploadImageProfileErrorState());
+    });
+  }
+  void removeImagePicke(){
+    imagePostPicke = null;
+    emit(LayoutRemoveImagePickerState());
+  }
+
+  void uploadCreatePost({
+    required String textPost,
+    required String datePost,
+    String? imagePost,
+  }) {
+    emit(LayoutUpdateDataPostLoadingState());
+
+    PostModel model = PostModel(
+      name: userModel!.name,
+      image: userModel!.image,
+      uid: userModel!.uid,
+      imagePost: imagePost ?? '',
+      textPost: textPost,
+      datePost: datePost,
+    );
+    FirebaseFirestore.instance
+        .collection('posts')
+        .add(model.toMap())
+        .then((value) {
+      emit(LayoutUpdateCreatePostSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(LayoutUpdateCreatePostErrorState());
+    });
+  }
 }

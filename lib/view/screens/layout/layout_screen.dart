@@ -24,7 +24,7 @@ class LayoutScreen extends StatelessWidget {
             currentIndex: cubit.currendIndex ,
             items: cubit.bottomNavigaton ,
             onTap: (index){
-              cubit.changeBottom(index);
+              cubit.changeBottom(index,context);
             },
           ),
         );

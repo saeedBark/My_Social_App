@@ -4,7 +4,7 @@ class DefaultFromFile extends StatelessWidget {
   TextEditingController controller;
   Function? onsumit;
   String lable;
-  IconData prefix;
+  IconData? prefix;
   TextInputType? type;
   Function? validator;
   IconData? suffix;
@@ -15,7 +15,7 @@ class DefaultFromFile extends StatelessWidget {
     required this.controller,
     this.onsumit,
     required this.lable,
-    required this.prefix,
+     this.prefix,
     this.onTap,
     this.type,
      this.validator,

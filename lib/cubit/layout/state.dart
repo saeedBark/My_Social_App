@@ -37,3 +37,24 @@ class LayoutUploadCoverProfileErrorState extends LayoutState{}
 class LayoutUpdateDataUserSuccessState extends LayoutState{}
 
 class LayoutUpdateDataUserErrorState extends LayoutState{}
+
+///////// Picke post //////
+
+class LayoutPickeImagePostSuccessState extends LayoutState{}
+
+class LayoutPickeImagePostErrorState extends LayoutState{}
+
+//////// upload data post with out image post
+class LayoutUpdateDataPostLoadingState extends LayoutState{}
+
+class LayoutUpdateCreatePostSuccessState extends LayoutState{}
+
+class LayoutUpdateCreatePostErrorState extends LayoutState{}
+
+///////// upload image post with data
+
+class LayoutUploadImagePostSuccessState extends LayoutState{}
+
+class LayoutUploadImagePostErrorState extends LayoutState{}
+///////// remove image picker
+class LayoutRemoveImagePickerState extends LayoutState{ }
