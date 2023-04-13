@@ -1,5 +1,10 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_social_app/cubit/layout/cubit.dart';
+import 'package:my_social_app/cubit/layout/state.dart';
+import 'package:my_social_app/view/widget/feed/card_widget.dart';
 
 import '../../widget/feed/feed_widget.dart';
 
@@ -8,14 +13,47 @@ class FeedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      itemBuilder: (context,index) {
-        return  const FeedWidget();
+    return BlocConsumer<LayoutCubit, LayoutState>(
+      listener: (context, state) {
+        // TODO: implement listener
       },
-      separatorBuilder: (context,index) => const SizedBox(height: 10,),
-      itemCount: 5,
+      builder: (context, state) {
+        var cubit = LayoutCubit.get(context);
+        return ConditionalBuilder(
+          condition: cubit.posts.length > 0 && cubit.userModel != null,
+          builder: (context) => Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  CardWidget(image: cubit.userModel!.cover!,),
+                  ListView.separated(
+                   physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return FeedWidget(
+                        image: cubit.posts[index].image!,
+                        name: cubit.posts[index].name!,
+                        datePost: cubit.posts[index].datePost!,
+                        textPost: cubit.posts[index].textPost!,
+                        imagePost: cubit.posts[index].imagePost!,
+                        userImage: cubit.userModel!.image!,
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
+                    ),
+                    itemCount: cubit.posts.length,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          fallback: (BuildContext context) =>
+              const Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 }

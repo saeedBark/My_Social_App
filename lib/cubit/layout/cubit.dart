@@ -199,7 +199,7 @@ class LayoutCubit extends Cubit<LayoutState> {
   // String? uploadImageProfil = '';
   void uploadImagePost({
     required String textPost,
-     String? imagePost,
+    String? imagePost,
     required String datePost,
   }) {
     firebase_storage.FirebaseStorage.instance
@@ -224,7 +224,8 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(LayoutUploadImageProfileErrorState());
     });
   }
-  void removeImagePicke(){
+
+  void removeImagePicke() {
     imagePostPicke = null;
     emit(LayoutRemoveImagePickerState());
   }
@@ -252,6 +253,40 @@ class LayoutCubit extends Cubit<LayoutState> {
     }).catchError((error) {
       print(error.toString());
       emit(LayoutUpdateCreatePostErrorState());
+    });
+  }
+
+  List<PostModel> posts = [];
+  List<int> likeList = [];
+  void getAllPosts() {
+    FirebaseFirestore.instance.collection('posts').get().then((value) {
+      value.docs.forEach((element) {
+        element.reference.get().then((value){
+          posts.add(PostModel.formJson(element.data()));
+        }).catchError((error){
+          print(error.toString());
+        });
+
+        // print(element.data());
+      });
+      emit(LayoutGetAllPostSuccessState());
+    }).catchError((error) {
+      emit(LayoutGetAllPostErrorState());
+    });
+  }
+
+  void likePost(postId) {
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('likes')
+        .doc(userModel!.uid)
+        .set({'like': true})
+        .then((value) {
+      emit(LayoutLikePostSuccessState());
+    })
+        .catchError((error) {
+          emit(LayoutLikePostErrorState(error.toString()));
     });
   }
 }

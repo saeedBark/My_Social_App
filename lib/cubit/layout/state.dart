@@ -58,3 +58,17 @@ class LayoutUploadImagePostSuccessState extends LayoutState{}
 class LayoutUploadImagePostErrorState extends LayoutState{}
 ///////// remove image picker
 class LayoutRemoveImagePickerState extends LayoutState{ }
+
+////// get all posts
+
+class LayoutGetAllPostSuccessState extends LayoutState{}
+
+class LayoutGetAllPostErrorState extends LayoutState{}
+
+////////// like post
+class LayoutLikePostSuccessState extends LayoutState{}
+
+class LayoutLikePostErrorState extends LayoutState{
+  late final String error;
+  LayoutLikePostErrorState(this.error);
+}
