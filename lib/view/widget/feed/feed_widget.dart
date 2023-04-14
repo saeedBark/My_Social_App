@@ -1,19 +1,15 @@
+
+
+
+
+  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_social_app/cubit/layout/cubit.dart';
+import 'package:my_social_app/models/post_model.dart';
 
-class FeedWidget extends StatelessWidget {
-    FeedWidget(  {super.key, required this.image, required this.name, required this.datePost, required this.textPost, required this.imagePost, required this.userImage, this.postId,} );
+import '../../../cubit/layout/cubit.dart';
 
- final String image;
- final String name;
- final String datePost;
- final String textPost;
- final String imagePost;
- final String userImage;
- final String? postId;
 
-  @override
-  Widget build(BuildContext context  ) {
+  Widget  FeedWidget( PostModel model , context ,index ) {
     var cubit = LayoutCubit.get(context);
     return Container(
           width: double.infinity,
@@ -27,7 +23,7 @@ class FeedWidget extends StatelessWidget {
                      CircleAvatar(
                       radius: 30,
                       backgroundImage: NetworkImage(
-                        image,
+                        model.image!,
                       ),
                     ),
                     const SizedBox(
@@ -39,7 +35,7 @@ class FeedWidget extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text(name,
+                              Text(model.name!,
                                   style:
                                   Theme.of(context).textTheme.titleLarge),
                               const SizedBox(
@@ -51,7 +47,7 @@ class FeedWidget extends StatelessWidget {
                               )
                             ],
                           ),
-                          Text( datePost,
+                          Text( model.datePost!,
                               style: Theme.of(context)
                                   .textTheme
                                   .caption!
@@ -75,7 +71,7 @@ class FeedWidget extends StatelessWidget {
                 ),
               //  if(LayoutCubit.get(context).posts[index].imagePost != '')
                 Text(
-                  textPost,
+                 model.textPost!,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Wrap(
@@ -111,7 +107,7 @@ class FeedWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(7),
                       image:  DecorationImage(
                           image: NetworkImage(
-                            imagePost,
+                           model. imagePost!,
                           ),
                           fit: BoxFit.cover)),
                 ),
@@ -122,15 +118,15 @@ class FeedWidget extends StatelessWidget {
                       child: InkWell(
                         onTap: (){},
                         child: Row(
-                          children: const [
-                            Icon(Icons.favorite_outline,color: Colors.red,),
-                            SizedBox(width: 5,),
-                            Text('0')
+                          children:  [
+                            const Icon(Icons.favorite_outline,color: Colors.red,),
+                            const SizedBox(width: 5,),
+                            Text(cubit.likes[index].toString()),
                           ],
                         ),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: InkWell(
@@ -160,7 +156,7 @@ class FeedWidget extends StatelessWidget {
                      CircleAvatar(
                       radius: 25,
                       backgroundImage: NetworkImage(
-                        userImage,
+                        cubit.userModel!.image!,
                       ),
                     ),
                     const SizedBox(width: 20,),
@@ -169,7 +165,7 @@ class FeedWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: InkWell(
                         onTap: (){
-                          cubit.likePost(postId);
+                          cubit.likePost(cubit.postId[index]);
                         },
                         child: Row(
                           children: const [
@@ -188,4 +184,4 @@ class FeedWidget extends StatelessWidget {
         );
 
   }
-}
+

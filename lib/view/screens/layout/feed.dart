@@ -32,14 +32,7 @@ class FeedScreen extends StatelessWidget {
                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return FeedWidget(
-                        image: cubit.posts[index].image!,
-                        name: cubit.posts[index].name!,
-                        datePost: cubit.posts[index].datePost!,
-                        textPost: cubit.posts[index].textPost!,
-                        imagePost: cubit.posts[index].imagePost!,
-                        userImage: cubit.userModel!.image!,
-                      );
+                      return FeedWidget(cubit.posts[index],context,index);
                     },
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 10,
@@ -56,4 +49,7 @@ class FeedScreen extends StatelessWidget {
       },
     );
   }
+
+
+
 }

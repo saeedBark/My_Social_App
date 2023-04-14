@@ -2,13 +2,16 @@
 abstract class LayoutState {}
 
 class LayoutInitialState extends LayoutState {}
-
+///////// get all users
 class LayoutGetAllUserLoadingState extends LayoutState {}
 
 class LayoutGetAllUserSuccessState extends LayoutState {}
 
 class LayoutGetAllUserErrorState extends LayoutState {}
+///////////// get all user for chat
+class LayoutGetAllUserChatSuccessState extends LayoutState {}
 
+class LayoutGetAllUserChatErrorState extends LayoutState {}
 ////// change bottom ////////
 
 class LayoutChangeBottomState extends LayoutState {}

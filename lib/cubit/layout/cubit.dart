@@ -255,13 +255,15 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(LayoutUpdateCreatePostErrorState());
     });
   }
-
+ List<String> postId = [];
   List<PostModel> posts = [];
-  List<int> likeList = [];
+  List<int> likes = [];
   void getAllPosts() {
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       value.docs.forEach((element) {
-        element.reference.get().then((value){
+        element.reference.collection('likes').get().then((value){
+          likes.add(value.docs.length);
+          postId.add(element.id);
           posts.add(PostModel.formJson(element.data()));
         }).catchError((error){
           print(error.toString());
@@ -289,4 +291,17 @@ class LayoutCubit extends Cubit<LayoutState> {
           emit(LayoutLikePostErrorState(error.toString()));
     });
   }
+  List<UserModel> users = [];
+  void getAllChatUser(){
+    FirebaseFirestore.instance.collection('users').get().then((value) {
+      value.docs.forEach((element) {
+          users.add(UserModel.formJson(element.data()));
+      });
+      emit(LayoutGetAllUserChatSuccessState());
+        }).catchError((error){
+          print(error.toString());
+          emit(LayoutGetAllUserChatErrorState());
+        });
+
+}
 }
