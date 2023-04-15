@@ -5,12 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
+import 'package:my_social_app/models/message_model.dart';
 import 'package:my_social_app/view/screens/layout/new_post_screen.dart';
 import 'package:my_social_app/view/widget/navigatorPage/navigator_page.dart';
 import '../../components/component.dart';
 import '../../models/post_model.dart';
 import '../../models/user_model.dart';
-import '../../view/screens/layout/chat.dart';
+import '../../view/screens/layout/chat/chat.dart';
 import '../../view/screens/layout/feed.dart';
 import '../../view/screens/layout/setting/setting.dart';
 import '../../view/screens/layout/users.dart';
@@ -40,6 +41,9 @@ class LayoutCubit extends Cubit<LayoutState> {
   int currendIndex = 0;
 
   void changeBottom(int index, context) {
+    if (index == 1) {
+      getAllChatUser();
+    }
     if (index == 2) {
       navigatorTo(context, NewPostScreen());
     } else {
@@ -255,17 +259,18 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(LayoutUpdateCreatePostErrorState());
     });
   }
- List<String> postId = [];
+
+  List<String> postId = [];
   List<PostModel> posts = [];
   List<int> likes = [];
   void getAllPosts() {
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       value.docs.forEach((element) {
-        element.reference.collection('likes').get().then((value){
+        element.reference.collection('likes').get().then((value) {
           likes.add(value.docs.length);
           postId.add(element.id);
           posts.add(PostModel.formJson(element.data()));
-        }).catchError((error){
+        }).catchError((error) {
           print(error.toString());
         });
 
@@ -283,25 +288,65 @@ class LayoutCubit extends Cubit<LayoutState> {
         .doc(postId)
         .collection('likes')
         .doc(userModel!.uid)
-        .set({'like': true})
-        .then((value) {
+        .set({'like': true}).then((value) {
       emit(LayoutLikePostSuccessState());
-    })
-        .catchError((error) {
-          emit(LayoutLikePostErrorState(error.toString()));
+    }).catchError((error) {
+      emit(LayoutLikePostErrorState(error.toString()));
     });
   }
-  List<UserModel> users = [];
-  void getAllChatUser(){
-    FirebaseFirestore.instance.collection('users').get().then((value) {
-      value.docs.forEach((element) {
-          users.add(UserModel.formJson(element.data()));
-      });
-      emit(LayoutGetAllUserChatSuccessState());
-        }).catchError((error){
-          print(error.toString());
-          emit(LayoutGetAllUserChatErrorState());
-        });
 
-}
+  List<UserModel> users = [];
+  void getAllChatUser() {
+    if (users.isEmpty) {
+      FirebaseFirestore.instance.collection('users').get().then((value) {
+        value.docs.forEach((element) {
+          if (element.data()['uid'] != userModel!.uid!) {
+            users.add(UserModel.formJson(element.data()));
+          }
+        });
+        emit(LayoutGetAllUserChatSuccessState());
+      }).catchError((error) {
+        print(error.toString());
+        emit(LayoutGetAllUserChatErrorState());
+      });
+    }
+  }
+
+  void sendMessage({
+    required String receiveId,
+    required String textMessage,
+    required String dateTime,
+  }) {
+    MessageModel model = MessageModel(
+      sendId: userModel!.uid!,
+      receiveId: receiveId,
+      textMessage: textMessage,
+      dateTime: dateTime,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel!.uid)
+        .collection('chats')
+        .doc(receiveId)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+          emit(LayoutSendMessageSuccessState());
+    })
+        .catchError((error) {});
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(receiveId)
+        .collection('chats')
+        .doc(userModel!.uid)
+        .collection('messages')
+        .add(model.toMap())
+        .then((value) {
+      emit(LayoutSendMessageSuccessState());
+    })
+        .catchError((error) {
+          emit(LayoutSendMessageErrorState(error.toString()));
+    });
+  }
 }

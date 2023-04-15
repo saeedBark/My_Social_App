@@ -75,3 +75,11 @@ class LayoutLikePostErrorState extends LayoutState{
   late final String error;
   LayoutLikePostErrorState(this.error);
 }
+
+///////// send message
+class LayoutSendMessageSuccessState extends LayoutState{}
+
+class LayoutSendMessageErrorState extends LayoutState{
+  late final String error;
+  LayoutSendMessageErrorState(this.error);
+}

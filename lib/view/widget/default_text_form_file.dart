@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DefaultFromFile extends StatelessWidget {
   TextEditingController controller;
   Function? onsumit;
-  String lable;
+  String? lable;
   IconData? prefix;
   TextInputType? type;
   Function? validator;
@@ -14,7 +14,7 @@ class DefaultFromFile extends StatelessWidget {
   DefaultFromFile({super.key,
     required this.controller,
     this.onsumit,
-    required this.lable,
+     this.lable,
      this.prefix,
     this.onTap,
     this.type,

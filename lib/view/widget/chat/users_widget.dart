@@ -1,28 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_social_app/models/user_model.dart';
+import 'package:my_social_app/view/screens/layout/chat/chat_details_screen.dart';
+import 'package:my_social_app/view/widget/navigatorPage/navigator_page.dart';
 
-class UsersWidget extends StatelessWidget {
-  const UsersWidget({Key? key, required this.image, required this.name}) : super(key: key);
-final String image;
-final String name;
-  @override
-  Widget build(BuildContext context) {
+  Widget UsersWidget(UserModel model , context) {
     return InkWell(
-      onTap: (){},
+      onTap: (){
+        navigatorTo(context, ChatDetailsScreen(userModel: model,));
+      },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
         child: Row(
           children: [
              CircleAvatar(
-              radius: 30,
+              radius: 20,
               backgroundImage: NetworkImage(
-                image,
+               model.image!,
               ),
             ),
             const SizedBox(
               width: 10,
             ),
-            Text(name,
+            Text(model.name!,
                 style:
                 Theme.of(context).textTheme.titleLarge),
           ],
@@ -30,4 +29,4 @@ final String name;
       ),
     );
   }
-}
+
