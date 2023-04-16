@@ -8,7 +8,7 @@ class DefaultBottom extends StatelessWidget {
   Function function;
   String text;
    DefaultBottom({super.key,
-    this. color = const Color(0xFFD319C2),
+    required this. color ,
     this. width = double.infinity,
     this. raduis = 15,
     this. isUpperCase = true,

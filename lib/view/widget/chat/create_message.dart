@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateMessage extends StatelessWidget {
-  const CreateMessage({Key? key}) : super(key: key);
-
+  const CreateMessage( {Key? key, required this.message}) : super(key: key);
+final String  message;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -17,7 +16,7 @@ class CreateMessage extends StatelessWidget {
               topEnd: Radius.circular(10),
               topStart: Radius.circular(10),
             )),
-        child: Text('Hi I love you'),
+        child: Text(message),
       ),
     );
   }

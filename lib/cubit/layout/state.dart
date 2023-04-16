@@ -83,3 +83,5 @@ class LayoutSendMessageErrorState extends LayoutState{
   late final String error;
   LayoutSendMessageErrorState(this.error);
 }
+///////// get messages
+class LayoutGetMessageSuccessState extends LayoutState{}

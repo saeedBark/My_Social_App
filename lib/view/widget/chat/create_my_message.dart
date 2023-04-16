@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CreateMyMessage extends StatelessWidget {
-  const CreateMyMessage({Key? key}) : super(key: key);
-
+  const CreateMyMessage({Key? key, required this.message}) : super(key: key);
+final String message;
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -16,7 +16,7 @@ class CreateMyMessage extends StatelessWidget {
               topEnd: Radius.circular(10),
               topStart: Radius.circular(10),
             )),
-        child: Text('Hi I love you'),
+        child: Text(message),
       ),
     );
   }

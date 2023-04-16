@@ -331,9 +331,8 @@ class LayoutCubit extends Cubit<LayoutState> {
         .collection('messages')
         .add(model.toMap())
         .then((value) {
-          emit(LayoutSendMessageSuccessState());
-    })
-        .catchError((error) {});
+      emit(LayoutSendMessageSuccessState());
+    }).catchError((error) {});
 
     FirebaseFirestore.instance
         .collection('users')
@@ -344,9 +343,31 @@ class LayoutCubit extends Cubit<LayoutState> {
         .add(model.toMap())
         .then((value) {
       emit(LayoutSendMessageSuccessState());
-    })
-        .catchError((error) {
-          emit(LayoutSendMessageErrorState(error.toString()));
+    }).catchError((error) {
+      emit(LayoutSendMessageErrorState(error.toString()));
     });
+  }
+ MessageModel? messageModel;
+  List<MessageModel> messageList = [];
+  void getMessage({
+    required String receiveId,
+  }) {
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel!.uid)
+        .collection('chats')
+        .doc(receiveId)
+        .collection('messages')
+    .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+          messageList = [];
+      event.docs.forEach((element) {
+        messageList.add(MessageModel.formJson(element.data()));
+      });
+          emit(LayoutGetMessageSuccessState());
+    });
+
   }
 }

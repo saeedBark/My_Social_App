@@ -4,6 +4,7 @@ import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
 import 'package:my_social_app/view/widget/default_bottom.dart';
 
+import '../../../../components/colors.dart';
 import '../../../widget/default_text_form_file.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -169,6 +170,7 @@ class EditProfileScreen extends StatelessWidget {
                                   phone: phoneController.text,
                                 );
                               },
+                              color: defaultColor,
                               text: 'Upload Image',
                             ),
                             if(state is LayoutGetAllUserLoadingState)
@@ -182,7 +184,7 @@ class EditProfileScreen extends StatelessWidget {
                             ),
                           ],
                         )),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       if (cubit.coverProfile != null)
@@ -198,6 +200,7 @@ class EditProfileScreen extends StatelessWidget {
                                 );
                               },
                               text: 'Upload cover',
+                              color: defaultColor,
                             ),
                             if(state is LayoutGetAllUserLoadingState)
                             const SizedBox(
@@ -212,7 +215,7 @@ class EditProfileScreen extends StatelessWidget {
                         )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   DefaultFromFile(

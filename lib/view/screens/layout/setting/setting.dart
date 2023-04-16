@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
@@ -75,6 +76,31 @@ class SettingScreen extends StatelessWidget {
               }, child: const Icon(Icons.edit)),
             ],
           ),
+          const SizedBox(height: 25,),
+          Row(
+      
+            children: [
+              Expanded(
+                child: OutlinedButton(onPressed: (){
+                  FirebaseMessaging.instance.subscribeToTopic('announce');
+                },
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.green.withOpacity(0.8)
+                ), child:  const Text('Subscribe',style: TextStyle(color: Colors.white),),
+                ),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: OutlinedButton(onPressed: (){
+                  FirebaseMessaging.instance.unsubscribeFromTopic('announce');
+                },
+                  style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.red.withOpacity(0.8)
+                  ), child: const Text('Unsubscribe',style: TextStyle(color: Colors.white)),
+                ),
+              ),
+            ],
+          )
 
         ],
       ),

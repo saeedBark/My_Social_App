@@ -5,6 +5,7 @@ import 'package:my_social_app/cubit/register/cubit.dart';
 import 'package:my_social_app/cubit/register/state.dart';
 import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 
+import '../../../components/colors.dart';
 import '../../widget/default_bottom.dart';
 import '../../widget/default_text.dart';
 import '../../widget/default_text_form_file.dart';
@@ -49,7 +50,8 @@ class RegisterScreen extends StatelessWidget {
                             text: 'REGISTER',
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFFD319C2)),
+                            color: defaultColor,
+                        ),
                         const SizedBox(
                           height: 30,
                         ),
@@ -121,6 +123,7 @@ class RegisterScreen extends StatelessWidget {
                           condition: true,
                           // state is! LoginLoadingState,
                           builder: (context) => DefaultBottom(
+                            color: defaultColor,
                             function: () {
                               if (formkey.currentState!.validate()) {
                                 cubit.userRegister(
