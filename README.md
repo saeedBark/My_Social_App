@@ -12,6 +12,7 @@ Social App
 - Update user data 
 - Log out 
 - FCM notifications
+- Null safety
  Any advices !…
 
 ## Screens
