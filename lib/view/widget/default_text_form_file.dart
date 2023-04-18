@@ -26,28 +26,25 @@ class DefaultFromFile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap ,
-      child: TextFormField(
-        controller: controller,
-        obscureText: isPassword,
-        // onTap: () {
-        //   onTap!();
-        // },
-        keyboardType: type,
-        onFieldSubmitted: (d) {
-          onsumit!(d);
-        },
-        validator: (value) => validator!(value),
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword,
+      // onTap: () {
+      //   onTap!();
+      // },
+      keyboardType: type,
+      onFieldSubmitted: (d) {
+        onsumit!(d);
+      },
+      validator: (value) => validator!(value),
 
-        enabled: enable,
-        decoration: InputDecoration(
-          labelText: lable,
-          prefixIcon: Icon(prefix),
-          suffixIcon: suffix != null ? Icon(suffix) : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
+      enabled: enable,
+      decoration: InputDecoration(
+        labelText: lable,
+        prefixIcon: Icon(prefix),
+        suffixIcon: suffix != null ? Icon(suffix) : null,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
         ),
       ),
     );

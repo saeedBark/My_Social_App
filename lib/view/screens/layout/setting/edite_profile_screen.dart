@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
+import 'package:my_social_app/utils/style.dart';
 import 'package:my_social_app/view/widget/default_bottom.dart';
 
 import '../../../../components/colors.dart';
@@ -33,7 +34,7 @@ class EditProfileScreen extends StatelessWidget {
         var model = LayoutCubit.get(context).userModel;
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Edit Profile'),
+            title:  Text('Edit Profile',style: Styles.textStyle16,),
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -50,18 +51,18 @@ class EditProfileScreen extends StatelessWidget {
                   );
                   //cubit.uploadCoverProfile();
                 },
-                child: Text(
-                  'Update',
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Colors.blue,
-                        fontSize: 22,
-                      ),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Text(
+                    'Update',
+                    style: Styles.textStyle16,
+                  ),
                 ),
               ),
             ],
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.all( 10),
             child: SingleChildScrollView(
               child: Column(
                 children: [

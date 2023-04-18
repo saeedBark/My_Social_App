@@ -15,8 +15,7 @@ import '../../widget/navigatorPage/navigator_page.dart';
 import '../../widget/package/show_toast.dart';
 
 class LoginScreen extends StatelessWidget {
- const LoginScreen({Key? key}) : super(key: key);
-
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +37,11 @@ class LoginScreen extends StatelessWidget {
               print(error.toString());
             });
           }
-
-
         },
         builder: (context, state) {
           var cubit = LoginCubit.get(context);
           return Scaffold(
-             appBar: AppBar(),
+            appBar: AppBar(),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Form(
@@ -57,8 +54,7 @@ class LoginScreen extends StatelessWidget {
                         text: 'LOGIN',
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: defaultColor
-                    ),
+                        color: defaultColor),
                     const SizedBox(
                       height: 10,
                     ),
@@ -85,21 +81,28 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    DefaultFromFile(
+                    TextFormField(
                       controller: passwordController,
-                      isPassword: cubit.isPassword,
+                      obscureText: cubit.isPassword,
+                      onTap: () {
+                        cubit.changPasswordShow();
+                      },
+                      keyboardType: TextInputType.visiblePassword,
                       validator: (value) {
-                        if (value.isEmpty) {
+                        if (value!.isEmpty) {
                           return 'Please you must fill password here..';
                         }
                         return null;
                       },
-                      suffix: cubit.suffix,
-                      onsumit: () {
-                        cubit.changPasswordShow();
-                      },
-                      lable: 'Password',
-                      prefix: Icons.password,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.password),
+                        suffixIcon:
+                            cubit.suffix != null ? Icon(cubit.suffix) : null,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       height: 30,
@@ -131,7 +134,8 @@ class LoginScreen extends StatelessWidget {
                         ),
                         TextButton(
                             onPressed: () {
-                              navigatorAndReplace(context, const RegisterScreen());
+                              navigatorAndReplace(
+                                  context, const RegisterScreen());
                             },
                             child: const DefaultText(
                                 text: 'Register', color: Colors.blue)),

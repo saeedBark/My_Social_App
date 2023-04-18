@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:my_social_app/components/colors.dart';
 
   var themeMode = ThemeData(
     appBarTheme: const AppBarTheme(
@@ -21,7 +22,7 @@ import 'package:flutter/services.dart';
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       showUnselectedLabels: true,
-      selectedItemColor: Colors.deepOrange,
+      selectedItemColor: defaultColor,
       unselectedItemColor: Colors.grey,
       elevation: 0,
     ),

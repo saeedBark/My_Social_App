@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/layout/cubit.dart';
 import 'package:my_social_app/cubit/layout/state.dart';
 
+import '../../../utils/style.dart';
+
 class NewPostScreen extends StatelessWidget {
   NewPostScreen({Key? key}) : super(key: key);
   var textController = TextEditingController();
@@ -16,7 +18,7 @@ class NewPostScreen extends StatelessWidget {
         var cubit = LayoutCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Create New Post'),
+            title:  Text('Create New Post',style: Styles.textStyle16,),
             actions: [
               TextButton(
                 onPressed: () {
@@ -32,9 +34,13 @@ class NewPostScreen extends StatelessWidget {
                         datePost: now.toString());
                   }
                 },
-                child: const Text(
-                  'Post',
-                  style: TextStyle(fontSize: 22),
+                child:  Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+
+                    'Post',
+                      style: Styles.textStyle16,
+                  ),
                 ),
               ),
             ],
@@ -50,21 +56,21 @@ class NewPostScreen extends StatelessWidget {
                // const SizedBox(height: 10,),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children:  [
                     CircleAvatar(
                       radius: 30,
                       backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/photo-1679679008383-6f778fe07828?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw5M3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+                        LayoutCubit.get(context).userModel!.image!,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 15,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10.0),
+                     Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
                       child: Text(
-                        'Saeed Bark',
-                        style: TextStyle(
+                        LayoutCubit.get(context).userModel!.name!,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                     ),
@@ -113,7 +119,7 @@ class NewPostScreen extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Row(
                   children: [
                     Expanded(
@@ -135,6 +141,7 @@ class NewPostScreen extends StatelessWidget {
                         },
                       ),
                     ),
+                    const Spacer(),
                     const Expanded(
                       child: Text(
                         '# tags',

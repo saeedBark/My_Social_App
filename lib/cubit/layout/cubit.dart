@@ -264,12 +264,14 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<PostModel> posts = [];
   List<int> likes = [];
   void getAllPosts() {
+   // emit(LayoutGetAllPostLoadingState());
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       value.docs.forEach((element) {
         element.reference.collection('likes').get().then((value) {
           likes.add(value.docs.length);
           postId.add(element.id);
           posts.add(PostModel.formJson(element.data()));
+
         }).catchError((error) {
           print(error.toString());
         });

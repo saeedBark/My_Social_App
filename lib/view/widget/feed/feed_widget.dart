@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:my_social_app/models/post_model.dart';
 
 import '../../../cubit/layout/cubit.dart';
+import '../../../utils/style.dart';
 
 
   Widget  FeedWidget( PostModel model , context ,index ) {
     var cubit = LayoutCubit.get(context);
-    return Container(
+    return SizedBox(
           width: double.infinity,
           child: Card(
             elevation: 3,
@@ -61,6 +62,7 @@ import '../../../cubit/layout/cubit.dart';
                     )
                   ],
                 ),
+
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
@@ -72,7 +74,11 @@ import '../../../cubit/layout/cubit.dart';
               //  if(LayoutCubit.get(context).posts[index].imagePost != '')
                 Text(
                  model.textPost!,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  maxLines: 2,
+                  style: Styles.textStyle16.copyWith(
+                    fontSize: 18,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
                 Wrap(
                   children: [
@@ -135,7 +141,7 @@ import '../../../cubit/layout/cubit.dart';
                           children: const [
                             Icon(Icons.chat,color: Colors.amber,),
                             SizedBox(width: 5,),
-                            Text('0 comment')
+                            Text('5 comment')
                           ],
                         ),
                       ),
