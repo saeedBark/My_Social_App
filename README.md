@@ -1,8 +1,8 @@
 # my_social_app
 
 Social App
-- Firebase 
  Features : 
+- Firebase
 - Login
 - Register 
 - Create post (like/dislike/Write comment)
