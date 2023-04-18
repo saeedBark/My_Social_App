@@ -1,16 +1,8 @@
 # my_social_app
 
-A new Flutter project.
+A new Flutter project Scoial App 
 
-## Getting Started
+## Screens
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![screenshot-1681622679718](https://user-images.githubusercontent.com/109968682/232274458-c0b198f0-12c4-4cf9-bb50-8d010c9a5ff1.png)
+![screenshot-1681622689222](https://user-images.githubusercontent.com/109968682/232274464-b188bf53-7a1c-4bd9-bf40-2fe4cc805574.png)
