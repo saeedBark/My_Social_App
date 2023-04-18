@@ -3,6 +3,7 @@
 Social App
  Features : 
 - Firebase
+- Bloc
 - Login
 - Register 
 - Create post (like/dislike/Write comment)
