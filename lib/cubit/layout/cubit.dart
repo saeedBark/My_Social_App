@@ -53,24 +53,21 @@ class LayoutCubit extends Cubit<LayoutState> {
   }
 
   List<Widget> screens = [
-    FeedScreen(),
-    ChatScreen(),
+    const FeedScreen(),
+    const ChatScreen(),
     NewPostScreen(),
-    UsersScreen(),
-    SettingScreen(),
+    const SettingScreen(),
   ];
   List<String> title = [
     'Home',
     'Chat',
     'Post',
-    'Users',
     'Setting',
   ];
   List<BottomNavigationBarItem> bottomNavigaton = const [
     BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Feed'),
     BottomNavigationBarItem(icon: Icon(Icons.chat_outlined), label: 'Chat'),
     BottomNavigationBarItem(icon: Icon(Icons.post_add_outlined), label: 'Post'),
-    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'User'),
     BottomNavigationBarItem(
         icon: Icon(Icons.settings_outlined), label: 'Setting'),
   ];

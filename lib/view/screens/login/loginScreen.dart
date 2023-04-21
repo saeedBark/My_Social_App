@@ -6,7 +6,6 @@ import 'package:my_social_app/cubit/login/cubit.dart';
 import 'package:my_social_app/cubit/login/state.dart';
 import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 import 'package:my_social_app/view/screens/register/register_screen.dart';
-
 import '../../../share_preference/shared_preference.dart';
 import '../../widget/default_bottom.dart';
 import '../../widget/default_text.dart';
@@ -96,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                       },
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.password),
+                        prefixIcon: const Icon(Icons.password),
                         suffixIcon:
                             cubit.suffix != null ? Icon(cubit.suffix) : null,
                         border: OutlineInputBorder(

@@ -9,7 +9,6 @@ import 'package:my_social_app/share_preference/shared_preference.dart';
 
 import 'package:my_social_app/view/screens/layout/layout_screen.dart';
 import 'package:my_social_app/view/widget/package/show_toast.dart';
-
 import 'components/component.dart';
 import 'view/screens/login/loginScreen.dart';
 

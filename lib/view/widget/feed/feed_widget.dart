@@ -1,8 +1,3 @@
-
-
-
-
-  import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/models/post_model.dart';
 

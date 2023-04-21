@@ -7,7 +7,7 @@ class CoverAndImageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return   Container(
+    return  SizedBox(
       height: 200,
       child: Stack(
         alignment: AlignmentDirectional.bottomCenter,

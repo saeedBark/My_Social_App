@@ -13,9 +13,9 @@ class UsersScreen extends StatelessWidget {
       child: TextButton(
 
        onPressed: () {
-         SharedPreferenceCach.logout(key: 'uId').then((value) => navigatorTo(context, LoginScreen()));
+         SharedPreferenceCach.logout(key: 'uId').then((value) => navigatorTo(context, const LoginScreen()));
        },
-       child: Text('Users') ,
+       child: const Text('Users') ,
       ),
     );
   }
