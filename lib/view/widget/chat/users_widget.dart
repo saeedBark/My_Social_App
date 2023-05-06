@@ -3,7 +3,7 @@ import 'package:my_social_app/models/user_model.dart';
 import 'package:my_social_app/view/screens/layout/chat/chat_details_screen.dart';
 import 'package:my_social_app/view/widget/navigatorPage/navigator_page.dart';
 
-  Widget UsersWidget(UserModel model , context) {
+  Widget usersWidget(UserModel model , context) {
     return InkWell(
       onTap: (){
         navigatorTo(context, ChatDetailsScreen(userModel: model,));

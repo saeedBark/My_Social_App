@@ -21,7 +21,7 @@ class ChatScreen extends StatelessWidget {
         return ListView.separated(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (BuildContext context, int index) =>
-              UsersWidget(cubit.users[index], context),
+              usersWidget(cubit.users[index], context),
           separatorBuilder: (BuildContext context, int index) => const SizedBox(
             height: 10,
           ),

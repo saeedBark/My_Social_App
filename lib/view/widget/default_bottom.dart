@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class DefaultBottom extends StatelessWidget {
-  Color color;
-  double width;
-  double raduis;
-  bool isUpperCase;
-  Function function;
-  String text;
-   DefaultBottom({super.key,
+ final Color color;
+ final  double width;
+ final double radius;
+ final bool isUpperCase;
+final  Function function;
+final  String text;
+   const DefaultBottom({super.key,
     required this. color ,
     this. width = double.infinity,
-    this. raduis = 15,
+    this. radius = 15,
     this. isUpperCase = true,
     required this. function,
     required this. text,
@@ -22,7 +22,7 @@ class DefaultBottom extends StatelessWidget {
       height: 40,
       width: width,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(raduis),
+        borderRadius: BorderRadius.circular(radius),
         color: color,
       ),
       child: MaterialButton(

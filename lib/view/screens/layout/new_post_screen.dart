@@ -7,7 +7,7 @@ import '../../../utils/style.dart';
 
 class NewPostScreen extends StatelessWidget {
   NewPostScreen({Key? key}) : super(key: key);
-  var textController = TextEditingController();
+  final textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutState>(

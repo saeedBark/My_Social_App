@@ -109,7 +109,6 @@ class LayoutCubit extends Cubit<LayoutState> {
         .putFile(imageProfile!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        // uploadImageProfil = value;
         updateDataUser(
           name: name,
           bio: bio,
@@ -117,7 +116,6 @@ class LayoutCubit extends Cubit<LayoutState> {
           image: value,
         );
         print(value);
-        //   emit(LayoutUploadImageProfileSuccessState());
       }).catchError((error) {
         emit(LayoutUploadImageProfileErrorState());
       });

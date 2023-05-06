@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_social_app/share_preference/shared_preference.dart';
 import 'package:my_social_app/view/screens/login/loginScreen.dart';
