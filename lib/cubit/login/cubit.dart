@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_social_app/cubit/login/state.dart';
 
-
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginInitialState());
 
   static LoginCubit get(context) => BlocProvider.of(context);
-
+  final formkey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool isLoading = false;
   var suffix = Icons.visibility_outlined;
   bool isPassword = true;
   void changPasswordShow() {
@@ -23,20 +25,14 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) {
-    print('hi');
+    isLoading = false;
     emit(LoginLoadingState());
-    print('///////////');
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      print('///////fgdsfgd////');
-      print(value.user!.email);
       emit(LoginSuccessState(value.user!.uid));
     }).catchError((error) {
-      print(error.toString());
-      print('///55r4e4544544444444444');
       emit(LoginErrorState(error.toString()));
     });
   }
-
 }

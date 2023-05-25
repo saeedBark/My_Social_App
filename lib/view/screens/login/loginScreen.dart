@@ -18,9 +18,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var formkey = GlobalKey<FormState>();
-    var emailController = TextEditingController();
-    var passwordController = TextEditingController();
     return BlocProvider(
       create: (context) => LoginCubit(),
       child: BlocConsumer<LoginCubit, LoginState>(
@@ -38,114 +35,120 @@ class LoginScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          var cubit = LoginCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: formkey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const DefaultText(
-                        text: 'LOGIN',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: defaultColor),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    const DefaultText(
-                        text: 'Entre your email and password ',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    DefaultFromFile(
-                      controller: emailController,
-                      type: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please you must fill email here..';
-                        }
-                        return null;
-                      },
-                      lable: 'Email',
-                      prefix: Icons.email,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      controller: passwordController,
-                      obscureText: cubit.isPassword,
-                      onTap: () {
-                        cubit.changPasswordShow();
-                      },
-                      keyboardType: TextInputType.visiblePassword,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please you must fill password here..';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        prefixIcon: const Icon(Icons.password),
-                        suffixIcon:
-                            cubit.suffix != null ? Icon(cubit.suffix) : null,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ConditionalBuilder(
-                      condition: state is! LoginLoadingState,
-                      builder: (context) => DefaultBottom(
-                        color: defaultColor,
-                        function: () {
-                          if (formkey.currentState!.validate()) {
-                            cubit.userLogin(
-                                email: emailController.text,
-                                password: passwordController.text);
-                            //  print('saeed');
-                            //  navigatorAndReplace(context, HomeScreen());
-                          }
-                        },
-                        text: 'LOgin',
-                        isUpperCase: true,
-                      ),
-                      fallback: (context) =>
-                          const Center(child: CircularProgressIndicator()),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const DefaultText(
-                          text: "Don't have already email?",
-                        ),
-                        TextButton(
-                            onPressed: () {
-                              navigatorAndReplace(
-                                  context, const RegisterScreen());
-                            },
-                            child: const DefaultText(
-                                text: 'Register', color: Colors.blue)),
-                      ],
-                    ),
-                  ],
+            body: const LoginForm(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatelessWidget {
+  const LoginForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = LoginCubit.get(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Form(
+        key: cubit.formkey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const DefaultText(
+                text: 'LOGIN',
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: defaultColor),
+            const SizedBox(
+              height: 10,
+            ),
+            const DefaultText(
+                text: 'Entre your email and password ',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey),
+            const SizedBox(
+              height: 30,
+            ),
+            DefaultFromFile(
+              controller: cubit.emailController,
+              type: TextInputType.emailAddress,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Please you must fill email here..';
+                }
+                return null;
+              },
+              lable: 'Email',
+              prefix: Icons.email,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            TextFormField(
+              controller: cubit.passwordController,
+              obscureText: cubit.isPassword,
+              onTap: () {
+                cubit.changPasswordShow();
+              },
+              keyboardType: TextInputType.visiblePassword,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please you must fill password here..';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: const Icon(Icons.password),
+                suffixIcon: cubit.suffix != null ? Icon(cubit.suffix) : null,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
             ),
-          );
-        },
+            const SizedBox(
+              height: 30,
+            ),
+            ConditionalBuilder(
+              condition: !cubit.isLoading,
+              builder: (context) => DefaultBottom(
+                color: defaultColor,
+                function: () {
+                  if (cubit.formkey.currentState!.validate()) {
+                    cubit.userLogin(
+                        email: cubit.emailController.text,
+                        password: cubit.passwordController.text);
+                  }
+                },
+                text: 'LOgin',
+                isUpperCase: true,
+              ),
+              fallback: (context) =>
+                  const Center(child: CircularProgressIndicator()),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const DefaultText(
+                  text: "Don't have already email?",
+                ),
+                TextButton(
+                    onPressed: () {
+                      navigatorAndReplace(context, const RegisterScreen());
+                    },
+                    child: const DefaultText(
+                        text: 'Register', color: Colors.blue)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
