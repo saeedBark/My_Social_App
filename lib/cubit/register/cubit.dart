@@ -9,9 +9,14 @@ class RegisterCubit extends Cubit<RegisterState> {
   RegisterCubit() : super(RegisterInitialState());
 
   static RegisterCubit get(context) => BlocProvider.of(context);
+  final formkey = GlobalKey<FormState>();
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final namedController = TextEditingController();
+  final phoneController = TextEditingController();
   var suffix = Icons.visibility_outlined;
-  var isPassword = false;
+  bool isPassword = false;
 
   void changPasswordShow() {
     isPassword = !isPassword;

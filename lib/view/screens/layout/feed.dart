@@ -18,7 +18,7 @@ class FeedScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        var cubit = LayoutCubit.get(context);
+        final cubit = LayoutCubit.get(context);
         return ConditionalBuilder(
           condition: cubit.posts.isNotEmpty && cubit.userModel != null,
           builder: (context) => Padding(
@@ -27,12 +27,14 @@ class FeedScreen extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  CardWidget(image: cubit.userModel!.cover!,),
+                  CardWidget(
+                    image: cubit.userModel!.cover!,
+                  ),
                   ListView.separated(
-                   physics: const NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return feedWidget(cubit.posts[index],context,index);
+                      return feedWidget(cubit.posts[index], context, index);
                     },
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 10,
@@ -49,7 +51,4 @@ class FeedScreen extends StatelessWidget {
       },
     );
   }
-
-
-
 }

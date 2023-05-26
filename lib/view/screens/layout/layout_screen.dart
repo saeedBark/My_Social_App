@@ -11,7 +11,7 @@ class LayoutScreen extends StatelessWidget {
     return BlocConsumer<LayoutCubit, LayoutState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = LayoutCubit.get(context);
+        final cubit = LayoutCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             title: Text(cubit.title[cubit.currendIndex]),

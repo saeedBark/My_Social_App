@@ -9,103 +9,179 @@ import '../../../widget/default_text.dart';
 import '../../../widget/navigatorPage/navigator_page.dart';
 
 class SettingScreen extends StatelessWidget {
-   const SettingScreen({Key? key}) : super(key: key);
+  const SettingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutState>(
-  listener: (context, state) {
-    // TODO: implement listener
-  },
-  builder: (context, state) {
-    var userModel = LayoutCubit.get(context).userModel;
+      listener: (context, state) {
+        // TODO: implement listener
+      },
+      builder: (context, state) {
+        final userModel = LayoutCubit.get(context).userModel;
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Column(
+            children: [
+              CoverAndImageWidget(
+                  image: userModel!.image!, cover: userModel.cover!),
+              const SizedBox(
+                height: 10,
+              ),
+              DefaultText(
+                text: userModel.name!,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              DefaultText(
+                text: userModel.bio!,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const InformationPosts(),
+              const ButtonEdit(),
+              const SizedBox(
+                height: 25,
+              ),
+              const ButtonSubscrib(),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class InformationPosts extends StatelessWidget {
+  const InformationPosts({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Row(
         children: [
-          CoverAndImageWidget(image: userModel!.image!, cover: userModel.cover!),
-          const SizedBox(height: 10,),
-          DefaultText(text: userModel.name!,style: Theme.of(context).textTheme.titleLarge,),
-          const SizedBox(height: 10,),
-          DefaultText(text: userModel.bio!,style: Theme.of(context).textTheme.titleLarge,),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30.0),
-            child: Row(
+          Expanded(
+            child: Column(
               children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                     DefaultText(text: '100',style: Theme.of(context).textTheme.titleLarge,),
-                     DefaultText(text: 'Posts',style: Theme.of(context).textTheme.caption,),
-                    ],
-                  ),
+                DefaultText(
+                  text: '100',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Expanded(
-                  child: Column(
-                    children: [
-                     DefaultText(text: '420',style: Theme.of(context).textTheme.titleLarge,),
-                     DefaultText(text: 'photos',style: Theme.of(context).textTheme.caption,),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                     DefaultText(text: '20k',style: Theme.of(context).textTheme.titleLarge,),
-                     DefaultText(text: 'Followers',style: Theme.of(context).textTheme.caption,),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                     DefaultText(text: '50',style: Theme.of(context).textTheme.titleLarge,),
-                     DefaultText(text: 'Followings',style: Theme.of(context).textTheme.caption,),
-                    ],
-                  ),
+                DefaultText(
+                  text: 'Posts',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
             ),
           ),
-          Row(
-            children: [
-              Expanded(child: OutlinedButton(onPressed: (){}, child: const Text('Add photo '))),
-              const SizedBox(width: 5,),
-              OutlinedButton(onPressed: (){
-                navigatorTo(context,const EditProfileScreen());
-              }, child: const Icon(Icons.edit)),
-            ],
+          Expanded(
+            child: Column(
+              children: [
+                DefaultText(
+                  text: '420',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                DefaultText(
+                  text: 'photos',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 25,),
-          Row(
-      
-            children: [
-              Expanded(
-                child: OutlinedButton(onPressed: (){
-                  FirebaseMessaging.instance.subscribeToTopic('announce');
-                },
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.green.withOpacity(0.8)
-                ), child:  const Text('Subscribe',style: TextStyle(color: Colors.white),),
+          Expanded(
+            child: Column(
+              children: [
+                DefaultText(
+                  text: '20k',
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-              ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: OutlinedButton(onPressed: (){
-                  FirebaseMessaging.instance.unsubscribeFromTopic('announce');
-                },
-                  style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.red.withOpacity(0.8)
-                  ), child: const Text('Unsubscribe',style: TextStyle(color: Colors.white)),
+                DefaultText(
+                  text: 'Followers',
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
-              ),
-            ],
-          )
-
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              children: [
+                DefaultText(
+                  text: '50',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                DefaultText(
+                  text: 'Followings',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
-  },
-);
+  }
+}
+
+class ButtonEdit extends StatelessWidget {
+  const ButtonEdit({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: OutlinedButton(
+                onPressed: () {}, child: const Text('Add photo '))),
+        const SizedBox(
+          width: 5,
+        ),
+        OutlinedButton(
+            onPressed: () {
+              navigatorTo(context, const EditProfileScreen());
+            },
+            child: const Icon(Icons.edit)),
+      ],
+    );
+  }
+}
+
+class ButtonSubscrib extends StatelessWidget {
+  const ButtonSubscrib({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: OutlinedButton(
+            onPressed: () {
+              FirebaseMessaging.instance.subscribeToTopic('announce');
+            },
+            style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.green.withOpacity(0.8)),
+            child: const Text(
+              'Subscribe',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 15,
+        ),
+        Expanded(
+          child: OutlinedButton(
+            onPressed: () {
+              FirebaseMessaging.instance.unsubscribeFromTopic('announce');
+            },
+            style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.red.withOpacity(0.8)),
+            child: const Text('Unsubscribe',
+                style: TextStyle(color: Colors.white)),
+          ),
+        ),
+      ],
+    );
   }
 }
