@@ -22,6 +22,9 @@ class LayoutCubit extends Cubit<LayoutState> {
 
   static LayoutCubit get(context) => BlocProvider.of(context);
   UserModel? userModel;
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final bioController = TextEditingController();
   void getAllUser() {
     emit(LayoutGetAllUserLoadingState());
     FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
@@ -259,14 +262,13 @@ class LayoutCubit extends Cubit<LayoutState> {
   List<PostModel> posts = [];
   List<int> likes = [];
   void getAllPosts() {
-   // emit(LayoutGetAllPostLoadingState());
+    // emit(LayoutGetAllPostLoadingState());
     FirebaseFirestore.instance.collection('posts').get().then((value) {
       value.docs.forEach((element) {
         element.reference.collection('likes').get().then((value) {
           likes.add(value.docs.length);
           postId.add(element.id);
           posts.add(PostModel.formJson(element.data()));
-
         }).catchError((error) {
           print(error.toString());
         });
@@ -344,27 +346,26 @@ class LayoutCubit extends Cubit<LayoutState> {
       emit(LayoutSendMessageErrorState(error.toString()));
     });
   }
- MessageModel? messageModel;
+
+  MessageModel? messageModel;
   List<MessageModel> messageList = [];
   void getMessage({
     required String receiveId,
   }) {
-
     FirebaseFirestore.instance
         .collection('users')
         .doc(userModel!.uid)
         .collection('chats')
         .doc(receiveId)
         .collection('messages')
-    .orderBy('dateTime')
+        .orderBy('dateTime')
         .snapshots()
         .listen((event) {
-          messageList = [];
+      messageList = [];
       event.docs.forEach((element) {
         messageList.add(MessageModel.formJson(element.data()));
       });
-          emit(LayoutGetMessageSuccessState());
+      emit(LayoutGetMessageSuccessState());
     });
-
   }
 }

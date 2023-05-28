@@ -18,23 +18,22 @@ class EditProfileScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        final nameController = TextEditingController();
-        final phoneController = TextEditingController();
-        final bioController = TextEditingController();
+        final cubit = LayoutCubit.get(context);
+        // var cubit = LayoutCubit.get(context);
+        final userModel = LayoutCubit.get(context).userModel;
+        // var imageProfile = LayoutCubit.get(context).imageProfile;
+        // var coverProfile = LayoutCubit.get(context).coverProfile;
 
-        var cubit = LayoutCubit.get(context);
-        var userModel = LayoutCubit.get(context).userModel;
-        var imageProfile = LayoutCubit.get(context).imageProfile;
-        var coverProfile = LayoutCubit.get(context).coverProfile;
+        cubit.nameController.text = userModel!.name!;
+        cubit.bioController.text = userModel.bio!;
+        cubit.phoneController.text = userModel.phone!;
 
-        nameController.text = userModel!.name!;
-        bioController.text = userModel.bio!;
-        phoneController.text = userModel.phone!;
-
-        var model = LayoutCubit.get(context).userModel;
         return Scaffold(
           appBar: AppBar(
-            title:  Text('Edit Profile',style: Styles.textStyle16,),
+            title: Text(
+              'Edit Profile',
+              style: Styles.textStyle16,
+            ),
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -45,9 +44,9 @@ class EditProfileScreen extends StatelessWidget {
               TextButton(
                 onPressed: () {
                   cubit.updateDataUser(
-                    name: nameController.text,
-                    bio: bioController.text,
-                    phone: phoneController.text,
+                    name: cubit.nameController.text,
+                    bio: cubit.bioController.text,
+                    phone: cubit.phoneController.text,
                   );
                   //cubit.uploadCoverProfile();
                 },
@@ -62,7 +61,7 @@ class EditProfileScreen extends StatelessWidget {
             ],
           ),
           body: Padding(
-            padding: const EdgeInsets.all( 10),
+            padding: const EdgeInsets.all(10),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -82,11 +81,11 @@ class EditProfileScreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7),
                                     image: DecorationImage(
-                                        image: coverProfile == null
+                                        image: cubit.coverProfile == null
                                             ? NetworkImage(
-                                                model!.cover!,
+                                                cubit.userModel!.cover!,
                                               )
-                                            : FileImage(coverProfile)
+                                            : FileImage(cubit.coverProfile!)
                                                 as ImageProvider,
                                         fit: BoxFit.cover)),
                               ),
@@ -121,11 +120,12 @@ class EditProfileScreen extends StatelessWidget {
                               backgroundColor: Colors.white,
                               child: CircleAvatar(
                                 radius: 50,
-                                backgroundImage: imageProfile == null
+                                backgroundImage: cubit.imageProfile == null
                                     ? NetworkImage(
-                                        model!.image!,
+                                        cubit.userModel!.image!,
                                       )
-                                    : FileImage(imageProfile) as ImageProvider,
+                                    : FileImage(cubit.imageProfile!)
+                                        as ImageProvider,
                               ),
                             ),
                             Padding(
@@ -166,20 +166,20 @@ class EditProfileScreen extends StatelessWidget {
                             DefaultBottom(
                               function: () {
                                 cubit.uploadImageProfile(
-                                  name: nameController.text,
-                                  bio: bioController.text,
-                                  phone: phoneController.text,
+                                  name: cubit.nameController.text,
+                                  bio: cubit.bioController.text,
+                                  phone: cubit.phoneController.text,
                                 );
                               },
                               color: defaultColor,
                               text: 'Upload Image',
                             ),
-                            if(state is LayoutGetAllUserLoadingState)
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            if(state is LayoutGetAllUserLoadingState)
-                            const LinearProgressIndicator(),
+                            if (state is LayoutGetAllUserLoadingState)
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            if (state is LayoutGetAllUserLoadingState)
+                              const LinearProgressIndicator(),
                             const SizedBox(
                               height: 5,
                             ),
@@ -195,20 +195,20 @@ class EditProfileScreen extends StatelessWidget {
                             DefaultBottom(
                               function: () {
                                 cubit.uploadCoverProfile(
-                                  name: nameController.text,
-                                  bio: bioController.text,
-                                  phone: phoneController.text,
+                                  name: cubit.nameController.text,
+                                  bio: cubit.bioController.text,
+                                  phone: cubit.phoneController.text,
                                 );
                               },
                               text: 'Upload cover',
                               color: defaultColor,
                             ),
-                            if(state is LayoutGetAllUserLoadingState)
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            if(state is LayoutGetAllUserLoadingState)
-                            const LinearProgressIndicator(),
+                            if (state is LayoutGetAllUserLoadingState)
+                              const SizedBox(
+                                height: 5,
+                              ),
+                            if (state is LayoutGetAllUserLoadingState)
+                              const LinearProgressIndicator(),
                             const SizedBox(
                               height: 5,
                             ),
@@ -220,7 +220,7 @@ class EditProfileScreen extends StatelessWidget {
                     height: 20,
                   ),
                   DefaultFromFile(
-                    controller: nameController,
+                    controller: cubit.nameController,
                     lable: 'name',
                     prefix: Icons.person_outline,
                   ),
@@ -228,7 +228,7 @@ class EditProfileScreen extends StatelessWidget {
                     height: 10,
                   ),
                   DefaultFromFile(
-                    controller: bioController,
+                    controller: cubit.bioController,
                     lable: 'bio',
                     prefix: Icons.info_outline,
                   ),
@@ -236,7 +236,7 @@ class EditProfileScreen extends StatelessWidget {
                     height: 10,
                   ),
                   DefaultFromFile(
-                    controller: phoneController,
+                    controller: cubit.phoneController,
                     lable: 'phone',
                     prefix: Icons.phone,
                   ),
