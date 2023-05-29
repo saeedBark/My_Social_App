@@ -69,91 +69,10 @@ class EditProfileScreen extends StatelessWidget {
                     height: 200,
                     child: Stack(
                       alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        Align(
-                          alignment: AlignmentDirectional.topCenter,
-                          child: Stack(
-                            alignment: AlignmentDirectional.topEnd,
-                            children: [
-                              Container(
-                                height: 160,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7),
-                                    image: DecorationImage(
-                                        image: cubit.coverProfile == null
-                                            ? NetworkImage(
-                                                cubit.userModel!.cover!,
-                                              )
-                                            : FileImage(cubit.coverProfile!)
-                                                as ImageProvider,
-                                        fit: BoxFit.cover)),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 8.0, top: 8),
-                                child: Container(
-                                    height: 40,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.blue,
-                                    ),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        cubit.getCoverFrofile();
-                                      },
-                                      icon: const Icon(
-                                        Icons.camera_alt_outlined,
-                                        size: 25,
-                                        color: Colors.white,
-                                      ),
-                                    )),
-                              )
-                            ],
-                          ),
-                        ),
-                        Stack(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          children: [
-                            CircleAvatar(
-                              radius: 55,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundImage: cubit.imageProfile == null
-                                    ? NetworkImage(
-                                        cubit.userModel!.image!,
-                                      )
-                                    : FileImage(cubit.imageProfile!)
-                                        as ImageProvider,
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 8.0, top: 8),
-                              child: Container(
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.blue,
-                                ),
-                                child: IconButton(
-                                  onPressed: () {
-                                    cubit.getImageProfile();
-                                  },
-                                  icon: const Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 25,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                      children: [],
                     ),
                   ),
+                  const ProfileWidget(),
                   const SizedBox(
                     height: 40,
                   ),
@@ -246,6 +165,103 @@ class EditProfileScreen extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class ProfileWidget extends StatelessWidget {
+  const ProfileWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = LayoutCubit.get(context);
+
+    return Stack(
+      alignment: AlignmentDirectional.bottomEnd,
+      children: [
+        CircleAvatar(
+          radius: 55,
+          backgroundColor: Colors.white,
+          child: CircleAvatar(
+            radius: 50,
+            backgroundImage: cubit.imageProfile == null
+                ? NetworkImage(
+                    cubit.userModel!.image!,
+                  )
+                : FileImage(cubit.imageProfile!) as ImageProvider,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0, top: 8),
+          child: Container(
+            height: 40,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.blue,
+            ),
+            child: IconButton(
+              onPressed: () {
+                cubit.getImageProfile();
+              },
+              icon: const Icon(
+                Icons.camera_alt_outlined,
+                size: 25,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CoverProfile extends StatelessWidget {
+  const CoverProfile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final cubit = LayoutCubit.get(context);
+
+    return Align(
+      alignment: AlignmentDirectional.topCenter,
+      child: Stack(
+        alignment: AlignmentDirectional.topEnd,
+        children: [
+          Container(
+            height: 160,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                image: DecorationImage(
+                    image: cubit.coverProfile == null
+                        ? NetworkImage(
+                            cubit.userModel!.cover!,
+                          )
+                        : FileImage(cubit.coverProfile!) as ImageProvider,
+                    fit: BoxFit.cover)),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, top: 8),
+            child: Container(
+                height: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blue,
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    cubit.getCoverFrofile();
+                  },
+                  icon: const Icon(
+                    Icons.camera_alt_outlined,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                )),
+          )
+        ],
+      ),
     );
   }
 }
