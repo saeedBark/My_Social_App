@@ -65,12 +65,9 @@ class EditProfileScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
+                  const SizedBox(
                     height: 200,
-                    child: Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [],
-                    ),
+                    child: CoverProfile(),
                   ),
                   const ProfileWidget(),
                   const SizedBox(

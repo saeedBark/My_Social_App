@@ -8,18 +8,18 @@ class PostModel {
 
   PostModel(
       {this.name,
-        this.textPost,
-        this.imagePost,
-        this.uid,
-        this.image,
-        this.datePost});
+      this.textPost,
+      this.imagePost,
+      this.uid,
+      this.image,
+      this.datePost});
   PostModel.formJson(Map<String, dynamic> json) {
-    name = json['name'];
-    textPost = json['textPost'];
-    uid = json['uid'];
-    imagePost = json['imagePost'];
-    image = json['image'];
-    datePost = json['datePost'];
+    name = json['name'] ?? '';
+    textPost = json['textPost'] ?? '';
+    uid = json['uid'] ?? '';
+    imagePost = json['imagePost'] ?? '';
+    image = json['image'] ?? '';
+    datePost = json['datePost'] ?? '';
   }
 
   Map<String, dynamic> toMap() {
